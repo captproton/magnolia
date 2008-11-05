@@ -10,6 +10,11 @@ RAILS_GEM_VERSION = '2.1.1' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# Load application constants for current environment
+config_file = File.read(RAILS_ROOT + "/config/application_config.yml")
+require 'yaml' # script/generate executes environment.rb but hasn't required yaml
+APP_CONFIG = YAML.load(config_file)[RAILS_ENV]
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
@@ -25,7 +30,11 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
-
+  config.gem 'rubyist-aasm', :lib => 'aasm'
+  config.gem "ruby-openid", :lib => "openid"
+  
+  config.active_record.observers = :account_observer  
+  
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -48,8 +57,8 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_magnolia2_session',
-    :secret      => '9ffe57d315b7df2344c6b52138c517df0c3d7caee31fd0fdb404716f3ba8942ee1db05448acf8df1fbec31b15832ddb44fb004b6ea775dee8183e83c4770529a'
+    :session_key => APP_CONFIG['settings']['session_key'],
+    :secret      => APP_CONFIG['settings']['secret']
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -65,3 +74,4 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
 end
+
