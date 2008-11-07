@@ -1,0 +1,7 @@
+<% if @user -%>
+	<p>You are logged in as <%= @user.screen_name %>.</p>
+	<p><%= link_to 'Log Out', logout_path %></p>
+<% else -%>
+	<p>You are not logged in.</p>
+	<p><%= link_to 'Log In', login_path %></p>
+<% end -%>

@@ -1,0 +1,13 @@
+<head>
+<title><%= @head_title || "Ma.gnolia.com - Find Web Sites &amp; Build Community Online" %></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="description" content="<%= @head_description || "Find web sites with Ma.gnolia's social bookmarking online community. Organize bookmarks, search other people's favorites and make friends online." %>" />
+
+<link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" title="Ma.gnolia" href="/addons/opensearch.xml" />
+
+<%= stylesheet_link_tag "gnolia", "reset", :cache => 'default' %>
+
+<%= yield :head %>
+
+</head>
