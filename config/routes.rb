@@ -4,7 +4,6 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'user_sessions', :action => 'new'
 	map.signup '/signup', :controller => 'users', :action => 'new'
   
-  map.resource :account, :controller => "users"
   map.resources :users
   map.resource :user_session
   

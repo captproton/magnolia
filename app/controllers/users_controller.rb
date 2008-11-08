@@ -3,11 +3,14 @@ class UsersController < ApplicationController
   layout 'basic'
   
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user, :only => [:show, :edit, :update, :index]
   
   def index
     @users = User.find :all
-    render :layout => 'full_width'
+    respond_to do |format|
+      format.html { render :layout => 'full_width' }
+      format.xml  { render :xml => @users }
+    end
   end
   
   # GET /users/new
@@ -29,7 +32,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:notice] = "Account registered!"
-        format.html { redirect_back_or_default account_url }
+        format.html { redirect_back_or_default user_url(@user) }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => :new }
@@ -42,31 +45,11 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   # This action will be for displaying a user's profile page. Probably will just redirect to a 'People' resource.
   def show
-    @user = @current_user
+    @user = User.find( params[:id] )
 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
-    end
-  end
-
-  def edit
-    @user = @current_user
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
-  end
-  
-  def update
-    @user = @current_user # makes our views "cleaner" and more consistent
-    if @user.update_attributes( params[:user] )
-      flash[:notice] = "Account updated!"
-      format.html { redirect_to account_url }
-      format.xml  { render :xml => @user, :status => :created, :location => @user }
-    else  
-      format.html { render :action => :edit }
-      format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
     end
   end
 

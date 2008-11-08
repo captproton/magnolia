@@ -7,7 +7,7 @@ describe UsersController do
     end
   
     it "should map #new" do
-      route_for(:controller => "users", :action => "new").should == "/users/new"
+      route_for(:controller => "users", :action => "new").should == "/signup"
     end
   
     it "should map #show" do
