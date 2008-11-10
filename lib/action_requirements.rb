@@ -5,8 +5,8 @@ module ActionRequirements
     def require_user
       unless @current_user
         store_location
-        flash[:notice] = "You must be logged in to access this page"
-        redirect_to new_user_session_url
+        flash[:notice] = 'You must be logged in to access this page.'
+        redirect_to login_url
         return false
       end
     end
@@ -14,7 +14,7 @@ module ActionRequirements
     def require_no_user
       if @current_user
         store_location
-        flash[:notice] = "You must be logged out to access this page"
+        flash[:notice] = 'You must be logged out to access this page.'
         redirect_to @current_user
         return false
       end

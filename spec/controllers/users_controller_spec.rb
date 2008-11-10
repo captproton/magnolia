@@ -28,7 +28,15 @@ describe UsersController do
     
       end
     end
-
+    
+    describe "when not logged in" do
+      it "should redirect to login page" do       
+        get :index
+        response.should redirect_to( login_url )
+        flash[:notice].should ==('You must be logged in to access this page.')
+      end
+    end
+    
   end
 
   describe "responding to GET show" do
@@ -57,55 +65,78 @@ describe UsersController do
       end
     end
     
-    # describe "when not logged in" do
-    #   it "should description" do
-    #     
-    #   end
-    # end
+    describe "when not logged in" do
+      it "should redirect to login page" do       
+        get :show, :id => '37'
+        response.should redirect_to( login_url )
+        flash[:notice].should ==('You must be logged in to access this page.')
+      end
+    end
   end
 
   describe "responding to GET new" do
-  
-    it "should expose a new user as @user" do
-      User.should_receive(:new).and_return(mock_user)
-      get :new
-      assigns[:user].should equal(mock_user)
+    
+    describe "when not logged in" do
+      it "should expose a new user as @user" do
+        User.should_receive(:new).and_return(mock_user)
+        get :new
+        assigns[:user].should equal(mock_user)
+      end
     end
-
+    
+    describe "when logged in" do
+      it "should redirect to user home page" do        
+        login_as(mock_user)
+        get :new
+        response.should redirect_to( user_path(mock_user) )
+        flash[:notice].should ==('You must be logged out to access this page.')
+      end
+    end
   end
 
   describe "responding to POST create" do
-
-    describe "with valid params" do
+    
+    describe "when not logged in" do
+      describe "with valid params" do
       
-      it "should expose a newly created user as @user" do
-        User.should_receive(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))
-        post :create, :user => {:these => 'params'}
-        assigns(:user).should equal(mock_user)
-      end
+        it "should expose a newly created user as @user" do
+          User.should_receive(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))
+          post :create, :user => {:these => 'params'}
+          assigns(:user).should equal(mock_user)
+        end
 
-      it "should redirect to the created user" do
-        User.stub!(:new).and_return(mock_user(:save => true))
-        post :create, :user => {}
-        response.should redirect_to(user_url(mock_user))
-      end
+        it "should redirect to the created user" do
+          User.stub!(:new).and_return(mock_user(:save => true))
+          post :create, :user => {}
+          response.should redirect_to(user_url(mock_user))
+        end
       
+      end
+    
+      describe "with invalid params" do
+
+        it "should expose a newly created but unsaved user as @user" do
+          User.stub!(:new).with({'these' => 'params'}).and_return(mock_user(:save => false))
+          post :create, :user => {:these => 'params'}
+          assigns(:user).should equal(mock_user)
+        end
+
+        it "should re-render the 'new' template" do
+          User.stub!(:new).and_return(mock_user(:save => false))
+          post :create, :user => {}
+          response.should render_template('new')
+        end
+      
+      end
     end
     
-    describe "with invalid params" do
-
-      it "should expose a newly created but unsaved user as @user" do
-        User.stub!(:new).with({'these' => 'params'}).and_return(mock_user(:save => false))
-        post :create, :user => {:these => 'params'}
-        assigns(:user).should equal(mock_user)
+    describe "when logged in" do
+      it "should redirect to user home page" do        
+        login_as(mock_user)
+        post :create
+        response.should redirect_to( user_path(mock_user) )
+        flash[:notice].should ==('You must be logged out to access this page.')
       end
-
-      it "should re-render the 'new' template" do
-        User.stub!(:new).and_return(mock_user(:save => false))
-        post :create, :user => {}
-        response.should render_template('new')
-      end
-      
     end
     
   end
