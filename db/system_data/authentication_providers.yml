@@ -91,7 +91,7 @@ authentication_providers_006:
   logo: wordpress.jpg
   id: "24"
   description: E.g. http://[your blog].wordpress.com
-  type: OpenIdProvider
+  type: KnownProvider
   label: WordPress Blog URL
   created_at: 2008-03-31 16:03:29
   active: "1"
