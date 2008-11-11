@@ -50,7 +50,7 @@ describe UserSessionsController do
         it "should re-render the 'new' template" do
           UserSession.should_receive(:find).and_return(nil)
           mock_user_session.should_receive(:save).and_return(false)
-          UserSession.should_receive(:new).with({'these' => 'params'}).and_return(mock_user_session)
+          UserSession.stub!(:new).and_return(mock_user_session(:save => false))
           post :create, :user_session => {}
           response.should render_template('new')
         end

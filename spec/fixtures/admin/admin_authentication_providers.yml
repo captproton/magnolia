@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: 
+  type: 
+  label: 
+  logo: 
+  button: 
+  description: 
+  active: 
+  display_sequence: 1
+
+two:
+  name: 
+  type: 
+  label: 
+  logo: 
+  button: 
+  description: 
+  active: 
+  display_sequence: 1

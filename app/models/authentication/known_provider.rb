@@ -1,0 +1,3 @@
+class KnownProvider < AuthenticationProvider
+  
+end

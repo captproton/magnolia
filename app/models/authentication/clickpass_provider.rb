@@ -1,0 +1,3 @@
+class ClickpassProvider < AuthenticationProvider
+  
+end

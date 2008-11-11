@@ -1,0 +1,3 @@
+class OneClickProvider < AuthenticationProvider
+  
+end

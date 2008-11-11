@@ -1,0 +1,3 @@
+class PasswordProvider < AuthenticationProvider
+  
+end

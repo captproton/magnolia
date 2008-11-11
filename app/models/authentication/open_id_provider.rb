@@ -1,0 +1,3 @@
+class OpenIdProvider < AuthenticationProvider
+  
+end

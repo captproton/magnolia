@@ -1,0 +1,2 @@
+module AuthenticationProvidersHelper
+end

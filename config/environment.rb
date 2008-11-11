@@ -16,6 +16,10 @@ require 'yaml' # script/generate executes environment.rb but hasn't required yam
 APP_CONFIG = YAML.load(config_file)[RAILS_ENV]
 
 Rails::Initializer.run do |config|
+  
+  # Modify load_paths to find models in subdirectories
+  Dir.glob("#{RAILS_ROOT}/app/models/*[^.rb]").each{|dir| config.load_paths << dir }
+  
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.

@@ -19,7 +19,7 @@ authentication_providers_010:
   logo: ""
   id: "28"
   description: ""
-  type: windowsliveid
+  type: WindowsLiveIdProvider
   label: Windows Live Id
   created_at: 2008-03-31 16:03:29
   active: "1"
@@ -31,7 +31,7 @@ authentication_providers_001:
   logo: openid.jpg
   id: "19"
   description: E.g. http://claimid.com/[OpenID Name]
-  type: OpenId
+  type: OpenIdProvider
   label: OpenID URL
   created_at: 2008-03-31 16:03:28
   active: "1"
@@ -43,7 +43,7 @@ authentication_providers_002:
   logo: magnolia.jpg
   id: "20"
   description: ""
-  type: Password
+  type: PasswordProvider
   label: Ma.gnolia Sign-in
   created_at: 2008-03-31 16:03:28
   active: "1"
@@ -55,7 +55,7 @@ authentication_providers_003:
   logo: yahoo.jpg
   id: "21"
   description: Click below to sign in with your Yahoo account.
-  type: OneClick
+  type: OneClickProvider
   label: Yahoo
   created_at: 2008-03-31 16:03:29
   active: "1"
@@ -67,7 +67,7 @@ authentication_providers_004:
   logo: facebook.jpg
   id: "22"
   description: Click below to sign in with your Facebook account. Facebook will authenticate you for Ma.gnolia without revealing your password.
-  type: OneClick
+  type: OneClickProvider
   label: ""
   created_at: 2008-03-31 16:03:29
   active: "1"
@@ -79,7 +79,7 @@ authentication_providers_005:
   logo: clickpass.jpg
   id: "23"
   description: Click below to sign in with Clickpass.
-  type: Clickpass
+  type: ClickpassProvider
   label: ""
   created_at: 2008-03-31 16:03:29
   active: "1"
@@ -91,7 +91,7 @@ authentication_providers_006:
   logo: wordpress.jpg
   id: "24"
   description: E.g. http://[your blog].wordpress.com
-  type: OpenId
+  type: OpenIdProvider
   label: WordPress Blog URL
   created_at: 2008-03-31 16:03:29
   active: "1"

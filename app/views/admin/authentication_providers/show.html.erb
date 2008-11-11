@@ -1,0 +1,43 @@
+<p>
+  <b>Name:</b>
+  <%=h @authentication_provider.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @authentication_provider.type %>
+</p>
+
+<p>
+  <b>Label:</b>
+  <%=h @authentication_provider.label %>
+</p>
+
+<p>
+  <b>Logo:</b>
+  <%=h @authentication_provider.logo %>
+</p>
+
+<p>
+  <b>Button:</b>
+  <%=h @authentication_provider.button %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @authentication_provider.description %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%=h @authentication_provider.active %>
+</p>
+
+<p>
+  <b>Display sequence:</b>
+  <%=h @authentication_provider.display_sequence %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_authentication_provider_path(@authentication_provider) %> |
+<%= link_to 'Back', admin_authentication_providers_path %>

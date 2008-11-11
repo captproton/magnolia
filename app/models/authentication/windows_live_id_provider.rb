@@ -1,0 +1,3 @@
+class WindowsLiveIdProvider < AuthenticationProvider
+  
+end
