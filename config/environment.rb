@@ -80,3 +80,5 @@ Rails::Initializer.run do |config|
   
 end
 
+ActionView::Helpers::AssetTagHelper.register_javascript_include_default "blueprint"
+ActionView::Helpers::AssetTagHelper.register_stylesheet_expansion :defaults => ["reset", "magnolia"]
