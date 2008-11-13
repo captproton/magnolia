@@ -1,0 +1,20 @@
+
+<% if known_provider.logo_path -%>
+<%= image_tag( known_provider.logo_path, :alt => known_provider.name, :id => 'auth_provider_icon', :style => 'float: left; margin:0 8px 0 0' ) %>
+<% end -%>
+
+<div class='auth_container signin_element'>
+	<label for="openid_url_<%= known_provider.name.downcase %>"><%= known_provider.label %></label><br/>
+	<input type="text" id="user_name" name="openid_url_<%= known_provider.name.downcase %>" class="signin_element text" style='clear: both;'/><br />
+
+	<span id='provider_description' class="caption signin_element">
+		<%= known_provider.description %>
+	</span>
+	<script type="text/javascript" charset="utf-8">
+		new FieldValueReplicator( 'user_name', 'provider_description', 'user_name' );
+	</script>
+	<p>
+		<%= hidden_field_tag "auth_method_#{ known_provider.name.downcase }".to_sym, 'known_provider' %>
+		<%= submit_tag "Sign In" %>
+	</p>
+</div>

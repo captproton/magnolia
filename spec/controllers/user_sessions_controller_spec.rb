@@ -6,12 +6,45 @@ describe UserSessionsController do
   describe "responding to GET new" do
     
     describe "when not logged in" do
-      it "should expose a new user as @user" do
+      
+      before(:each) do        
         UserSession.should_receive(:find).and_return(nil)
         UserSession.should_receive(:new).and_return(mock_user_session)
+      end
+      
+      it "should expose a new user as @user" do
         get :new
         assigns[:user_session].should equal(mock_user_session)
       end
+      
+      it "should expose the collection of authentication providers as @auth_providers" do
+        aps = [1, 2, 3, 4]
+        AuthenticationProvider.should_receive(:active).and_return(aps)
+        get :new
+        assigns[:auth_providers].should equal(aps)
+      end
+        
+      it "should expose the authentication method choice of the user as @preferred_auth_provider" do
+        get :new
+        assigns[:preferred_auth_provider].should_not be_nil
+      end
+      
+      it "should set @preferred_auth_provider to object with name=='openid' if no auth_method cookie is set" do
+        get :new
+        assigns[:preferred_auth_provider].name.should ==('openid')
+      end
+      
+      it "should set @preferred_auth_provider object name to cookie value when cookie is set" do
+        request.cookies['Magnolia_Auth_Method'] = CGI::Cookie.new('Magnolia_Auth_Method', 'cookie value')
+        get :new
+        assigns[:preferred_auth_provider].name.should ==('cookie value')
+      end
+        
+      it "should expose the logical section as @section == 'authentication'" do        
+        get :new
+        assigns[:section].should ==('authentication')
+      end
+      
     end
     
     describe "when logged in" do

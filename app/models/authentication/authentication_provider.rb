@@ -28,6 +28,7 @@
 #
 class AuthenticationProvider < ActiveRecord::Base
   
+  # Provides access to the active AuthenticatinProviders
   named_scope :active, :conditions => { :active => true }
   
   validates_presence_of :name

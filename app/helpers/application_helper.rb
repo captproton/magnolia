@@ -10,4 +10,8 @@ module ApplicationHelper
     end
   end
   
+  def disable_submit
+    "this.down('.text_submit').addClassName('disabled');"
+  end
+  
 end

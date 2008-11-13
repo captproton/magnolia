@@ -50,43 +50,23 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
 
-##
-# rSpec Hash additions.
-#
-# From 
-#   * http://wincent.com/knowledge-base/Fixtures_considered_harmful%3F
-#   * Neil Rahilly
-
-class Hash
-
-  ##
-  # Filter keys out of a Hash.
-  #
-  #   { :a => 1, :b => 2, :c => 3 }.except(:a)
-  #   => { :b => 2, :c => 3 }
-
-  def except(*keys)
-    self.reject { |k,v| keys.include?(k) || keys.include?( k.to_sym ) }
-  end
-
-  ##
-  # Override some keys.
-  #
-  #   { :a => 1, :b => 2, :c => 3 }.with(:a => 4)
-  #   => { :a => 4, :b => 2, :c => 3 }
-  
-  def with(overrides = {})
-    self.merge overrides
-  end
-
-  ##
-  # Returns a Hash with only the pairs identified by +keys+.
-  #
-  #   { :a => 1, :b => 2, :c => 3 }.only(:a)
-  #   => { :a => 1 }
-  
-  def only(*keys)
-    self.reject { |k,v| keys.include?(k) || keys.include?( k.to_sym ) }
-  end
-
-end
+# module Spec
+#   module Example
+#     module BeforeAndAfterHooks
+#       
+#       def pop_before(scope)
+#         parts = before_parts_from_scope(scope)
+#         parts.pop
+#       end
+#       
+#     end
+#   end
+# end
+# 
+# # Handle doing a different before_each method for a collection of items in an abstract way
+# def for_each_variant before_method, *variants
+#  variants.each do |variant|
+#    self.send( before_method.to_sym, variant )
+#    yield variant
+#  end
+# end

@@ -1,0 +1,19 @@
+
+<%= image_tag( clickpass.logo_path, :alt => clickpass.name, :id => 'auth_provider_icon', :style => 'float: left; margin:0 8px 0 0' ) %>
+
+<div class='auth_container signin_element'>
+	
+	<%= clickpass.description %>
+	
+	<p>
+	<style> @import 'http://www.clickpass.com/stylesheets/container.css'; </style>
+	<div id="clickpass_button" style="width: 136px; height: 18px; position: relative; z-index : 9999 ;">
+	  <iframe src="http://www.clickpass.com/embedded_buttons/login/Ge9Jl0zvba" width="136" height="18" frameborder="0" allowtransparency="true" scrolling="no" style="z-index:9999;position: absolute; top: 0; left: 0;"></iframe> 
+	</div>
+	<script type="text/javascript" src="http://www.clickpass.com/javascripts/ClickpassPanel.class.external.js?v1"></script>
+	<script type="text/javascript">  
+	      var clickpassPanel = new ClickpassPanel('clickpass_button');
+	</script>
+	</p>
+</div>
+

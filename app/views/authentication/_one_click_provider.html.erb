@@ -1,0 +1,12 @@
+
+<% if one_click_provider.logo_path -%>
+	<%= image_tag( one_click_provider.logo_path, :alt => one_click_provider.name, :id => 'auth_provider_icon', :style => 'float: left; margin:0 8px 0 0' ) %>
+<% end -%>
+
+<div class='auth_container signin_element'>
+	<%= one_click_provider.description %>
+	<p>
+		<%= hidden_field_tag "auth_method_#{ one_click_provider.name.downcase }".to_sym, one_click_provider.name.downcase %>
+		<%= image_submit_tag( one_click_provider.button_path, :name => 'image_submit', :alt => "Sign in to #{one_click_provider.name}", :title => "Sign in to #{one_click_provider.name}" ) %>
+	</p>
+</div>
