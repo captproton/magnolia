@@ -67,3 +67,32 @@ thead th {
 thead th, tbody td {
 	padding: 0.5em 0.5em 0.5em 0;
 }
+
+/* Float Clearing TODO: double check this with current best-practices, create ie only stylesheets */
+/* http://www.quirksmode.org/css/clearing.html */
+/*.clear:after {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;
+}*/
+
+/* Signin */
+.authentication_provider input[type=text], .authentication_provider input[type=password] {
+	width: 280px;
+}
+
+#openid_icon {
+	vertical-align: bottom;
+}
+
+div.authentication_provider {
+  clear: both;
+  margin: 1em 0;
+  overflow: hidden; /* Clears floats inside this container: http://www.quirksmode.org/css/clearing.html */
+}
+
+div.auth_container {
+  float: left;
+}

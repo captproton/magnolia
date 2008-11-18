@@ -1,25 +1,12 @@
 <%# This partial is called once for each authentication provider exposed to the view. %>
 
 <div id='<%= auth_provider.name.downcase %>' class="authentication_provider clear" style='display: none;'><%# The display:none style has to be inline for prototype Element.hide/show to work. %>
-<%=
 	
-	# debugger
-	render :partial => "authentication/#{auth_provider.type.underscore}", :object => auth_provider
-		# 
-		# case auth_provider
-		#  	when OpenIdProvider
-		# 		render :partial => 'authentication/open_id_provider', :object => auth_provider
-		#  	when KnownProvider
-		# 		render :partial => 'authentication/known_provider', :object => auth_provider
-		# 	when OneClickProvider
-		# 		render :partial => 'authentication/one_click_provider', :object => auth_provider
-		# 	when PasswordProvider
-		# 		render :partial => 'authentication/password_auth'
-		# 	when ClickpassProvider
-		# 		render :partial => 'authentication/clickpass', :object => auth_provider
-		# 	when WindowsLiveIdProvider
-		# 		render :partial => 'authentication/windowsliveid'
-		# end 
+	<% form_tag user_session_path, {:id => "#{auth_provider.type.underscore}_form", :onsubmit => disable_submit } do %>
 		
-%>
+		<%=	render :partial => "authentication/#{auth_provider.type.underscore}", :object => auth_provider %>
+		<%= hidden_field_tag :auth_method, auth_provider.name.downcase %>
+		
+	<% end %>
+	
 </div>

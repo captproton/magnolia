@@ -1,28 +1,4 @@
 --- 
-authentication_providers_009: 
-  button: 
-  name: TypePad
-  updated_at: 2008-03-31 16:03:29
-  display_sequence: "8"
-  logo: typepad.jpg
-  id: "27"
-  description: http://profile.typekey.com/#{user_name}
-  type: KnownProvider
-  label: TypePad
-  created_at: 2008-03-31 16:03:29
-  active: "1"
-authentication_providers_010: 
-  button: 
-  name: WindowsLiveId
-  updated_at: 2008-03-31 16:03:29
-  display_sequence: "9"
-  logo: ""
-  id: "28"
-  description: ""
-  type: WindowsLiveIdProvider
-  label: Windows Live Id
-  created_at: 2008-03-31 16:03:29
-  active: "1"
 authentication_providers_001: 
   button: 
   name: OpenID
@@ -73,49 +49,61 @@ authentication_providers_004:
   active: "1"
 authentication_providers_005: 
   button: 
-  name: Clickpass
+  name: WordPress
   updated_at: 2008-03-31 16:03:29
   display_sequence: "4"
-  logo: clickpass.jpg
-  id: "23"
-  description: Click below to sign in with Clickpass.
-  type: ClickpassProvider
-  label: ""
+  logo: wordpress.jpg
+  id: "24"
+  description: E.g. http://blog_name.wordpress.com
+  type: KnownProvider
+  label: WordPress Blog Name:
   created_at: 2008-03-31 16:03:29
   active: "1"
 authentication_providers_006: 
   button: 
-  name: WordPress
+  name: AOL
   updated_at: 2008-03-31 16:03:29
   display_sequence: "5"
-  logo: wordpress.jpg
-  id: "24"
-  description: E.g. http://[your blog].wordpress.com
+  logo: aolaim.jpg
+  id: "25"
+  description: http://openid.aol.com/user_name
   type: KnownProvider
-  label: WordPress Blog URL
+  label: AOL User Name:
   created_at: 2008-03-31 16:03:29
   active: "1"
 authentication_providers_007: 
   button: 
-  name: AOL
+  name: LiveJournal
   updated_at: 2008-03-31 16:03:29
   display_sequence: "6"
-  logo: aolaim.jpg
-  id: "25"
-  description: http://openid.aol.com/#{user_name}
+  logo: livejournal.jpg
+  id: "26"
+  description: http://user_name.livejournal.com
   type: KnownProvider
-  label: AOL
+  label: LiveJournal User Name:
   created_at: 2008-03-31 16:03:29
   active: "1"
 authentication_providers_008: 
   button: 
-  name: LiveJournal
+  name: TypePad
   updated_at: 2008-03-31 16:03:29
   display_sequence: "7"
-  logo: livejournal.jpg
-  id: "26"
-  description: http://#{user_name}.livejournal.com
+  logo: typepad.jpg
+  id: "27"
+  description: http://profile.typekey.com/blog_name
   type: KnownProvider
-  label: LiveJournal
+  label: TypePad Blog Name:
+  created_at: 2008-03-31 16:03:29
+  active: "1"
+authentication_providers_009: 
+  button: 
+  name: WindowsLiveId
+  updated_at: 2008-03-31 16:03:29
+  display_sequence: "8"
+  logo: ""
+  id: "28"
+  description: ""
+  type: WindowsLiveIdProvider
+  label: Windows Live Id
   created_at: 2008-03-31 16:03:29
   active: "1"

@@ -3,7 +3,7 @@ class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy
 
-  layout 'basic'
+  layout 'full_width'
   
   # Displays the login form.
   # Mapped to route /signin

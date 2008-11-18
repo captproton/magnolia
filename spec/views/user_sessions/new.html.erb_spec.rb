@@ -7,12 +7,6 @@ describe "/user_sessions/new.html.erb" do
     assigns[:user_session] = stub_model(User, :new_record? => true )
     assigns[:auth_providers] = []
   end
-
-  it "should render new form" do
-    template.stub!(:render)
-    render "/user_sessions/new.html.erb"
-    response.should have_tag("form[action=?][method=post]", user_session_path)
-  end
   
   it "should render auth_form partial" do
     template.should_receive(:render).with( 

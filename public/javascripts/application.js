@@ -349,7 +349,7 @@ Object.extend(Object.extend(LocalSelectUpdater.prototype, Blueprint.Basic), {
 });
 
 /*--------------------------------------------------------------------------*/
-// TextFieldValueReplicator
+// FieldValueReplicator
 // Copyright (c) 2007 Gnolia Systems LP.
 // Author: Jesse Clark
 // Handles the onchange event of given text field watchElement and updates the contents of the targetElement with
@@ -377,6 +377,7 @@ Object.extend(Object.extend(FieldValueReplicator.prototype, Blueprint.Basic), {
     this.event('initialize', this);
   },
 
+// Todo change this to automatically sub out user_name or blog_name!
   updateTargetElement: function(event) {
     
     if( this.replaceContent == true ) {

@@ -1,13 +1,10 @@
 <h1>Sign In To Ma.gnolia</h1>
                           
-<div id="screen_name_form">
+<div id="authentication_form">
 
 <%= error_messages_for "user_session", :header_message => nil %>
-	
-<% form_for @user_session, :url => user_session_path, :html => {:id => 'signin_form', :onsubmit => disable_submit } do |f| %>
 
 <%# This partial is shared by the sign in form (user_sessions/new) and the registration form (users/new). %>
 <%= render :partial => 'authentication/auth_form', :locals => { :select_label => 'Sign in using', :auth_providers => @auth_providers } %>
 
-<% end %>
 </div>
