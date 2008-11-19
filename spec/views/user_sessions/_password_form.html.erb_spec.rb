@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/user_sessions/new.html.erb" do
+VIEW_PATH = "/user_sessions/_password_form.html.erb"
+
+describe VIEW_PATH do
   include UserSessionsHelper
   
   before(:each) do
@@ -9,20 +11,15 @@ describe "/user_sessions/new.html.erb" do
   end
   
   it "should render form" do
-    render "/user_sessions/new.html.erb"
+    render VIEW_PATH
     
     response.should have_tag("form[action=?][method=post]", user_session_path) do
-      with_tag("input#openid_url[name=?]", "openid_url")
+      with_tag("input#user_session_email[name=?]", "user_session[email]")
+      with_tag("input#user_session_password[type=password][name=?]", "user_session[password]")
       with_tag('input#user_session_remember_me[type=checkbox][name=?]', 'user_session[remember_me]' )
     end
   end
-  
-  it "should render password form when flag is set" do
-    assigns[:show_password_form] = @show_password_form = true
-    template.should_receive(:render).with( :partial => "password_form" )
-    render "/user_sessions/new.html.erb"
-  end
-  
+
 end
 
 

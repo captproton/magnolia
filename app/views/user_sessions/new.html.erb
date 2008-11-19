@@ -1,10 +1,41 @@
-<h1>Sign In To Ma.gnolia</h1>
                           
-<div id="authentication_form">
+<div id="authentication_container">
+	
+<h1>Sign In To Ma.gnolia</h1>
 
-<%= error_messages_for "user_session", :header_message => nil %>
+<% if @show_password_form -%>
+	<%= render :partial => 'password_form' %>
+	
+<% else -%>
 
-<%# This partial is shared by the sign in form (user_sessions/new) and the registration form (users/new). %>
-<%= render :partial => 'authentication/auth_form', :locals => { :select_label => 'Sign in using', :auth_providers => @auth_providers } %>
+	<div id='authentication_form_container'>
+		<% remote_form_for( @user_session, 
+				:url => user_session_path, 
+				:html => { :id => 'authentication_form' }, 
+				:before => "Element.show('spinner');Element.hide('authentication_form_container')",
+				:complete => "Element.hide('spinner');Element.show('authentication_form_container')"
+		) do |f| %>
 
+		  <%= f.error_messages %>
+
+		  <p>
+				<%= label_tag :openid_url, "Enter your email or" %> <%= link_to 'OpenId', 'http://openid.net', :title => 'Learn more about OpenId' %><br />
+			  <%= text_field_tag :openid_url %><br />
+			 	<%= f.submit "Go" %><br />
+			</p>
+			
+		  <p><%= f.check_box :remember_me, :style => 'vertical-align: middle;' %><%= f.label :remember_me, 'Keep me signed in' %></p>
+
+		<% end %>
+
+		<p>Not a member? You can <%= link_to 'Join Free', signup_url %>.</p>
+	</div>
+	
+	<div id='spinner' style='display:none;'>
+		<p>Just a moment...</p>
+		<%= image_tag 'ajax-loader.gif' %>
+	</div>
+	
+<% end -%>
 </div>
+

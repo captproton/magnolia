@@ -3,6 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe User do
   before(:each) do
     @valid_attributes = {
+      :email => 'value@email.com',
       :screen_name => "value for screen_name",
       :password => 'value for password',
       :confirm_password => 'value for password',

@@ -16,30 +16,7 @@ describe UserSessionsController do
         get :new
         assigns[:user_session].should equal(mock_user_session)
       end
-      
-      it "should expose the collection of authentication providers as @auth_providers" do
-        aps = [1, 2, 3, 4]
-        AuthenticationProvider.should_receive(:active).and_return(aps)
-        get :new
-        assigns[:auth_providers].should equal(aps)
-      end
-        
-      it "should expose the authentication method choice of the user as @preferred_auth_provider" do
-        get :new
-        assigns[:preferred_auth_provider].should_not be_nil
-      end
-      
-      it "should set @preferred_auth_provider to object with name=='openid' if no auth_method cookie is set" do
-        get :new
-        assigns[:preferred_auth_provider].name.should ==('openid')
-      end
-      
-      it "should set @preferred_auth_provider object name to cookie value when cookie is set" do
-        request.cookies['Magnolia_Auth_Method'] = CGI::Cookie.new('Magnolia_Auth_Method', 'cookie value')
-        get :new
-        assigns[:preferred_auth_provider].name.should ==('cookie value')
-      end
-        
+       
       it "should expose the logical section as @section == 'authentication'" do        
         get :new
         assigns[:section].should ==('authentication')
@@ -88,6 +65,14 @@ describe UserSessionsController do
           response.should render_template('new')
         end
       
+        it "should set the show password form flag" do
+          UserSession.should_receive(:find).and_return(nil)
+          mock_user_session.should_receive(:save).and_return(false)
+          UserSession.stub!(:new).and_return(mock_user_session(:save => false))
+          post :create, :user_session => {}
+          assigns[:show_password_form].should ==(true)
+        end
+        
       end
     end
     

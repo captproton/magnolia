@@ -5,6 +5,7 @@ describe "/users/show.html.erb" do
   
   before(:each) do
     assigns[:user] = @user = stub_model(User,
+      :email => 'value for email',
       :screen_name => "value for login",
       :crypted_password => "value for crypted_password",
       :password_salt => "value for password_salt",
@@ -17,6 +18,7 @@ describe "/users/show.html.erb" do
 
   it "should render attributes in <p>" do
     render "/users/show.html.erb"
+    response.should have_text(/value\ for\ email/)
     response.should have_text(/value\ for\ login/)
     response.should have_text(/value\ for\ crypted_password/)
     response.should have_text(/value\ for\ password_salt/)

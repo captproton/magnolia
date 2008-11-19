@@ -68,6 +68,15 @@ thead th, tbody td {
 	padding: 0.5em 0.5em 0.5em 0;
 }
 
+/* Errors */
+.fieldWithErrors {
+    display: inline;
+}
+.fieldWithErrors input, .fieldWithErrors select {
+    background-color: #ffdfdf;
+}
+
+
 /* Float Clearing TODO: double check this with current best-practices, create ie only stylesheets */
 /* http://www.quirksmode.org/css/clearing.html */
 /*.clear:after {
@@ -79,20 +88,20 @@ thead th, tbody td {
 }*/
 
 /* Signin */
-.authentication_provider input[type=text], .authentication_provider input[type=password] {
-	width: 280px;
-}
 
-#openid_icon {
-	vertical-align: bottom;
-}
-
-div.authentication_provider {
-  clear: both;
-  margin: 1em 0;
+#authentication_container {
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden; /* Clears floats inside this container: http://www.quirksmode.org/css/clearing.html */
 }
 
-div.auth_container {
-  float: left;
+#authentication_container h1 {
+  text-align: center;
 }
+
+#authentication_container form input[type=text], #authentication_container form input[type=password] {
+  font-size: 1.5em;
+  width: 444px;
+}
+

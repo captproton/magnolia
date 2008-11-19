@@ -13,6 +13,7 @@ ActiveRecord::Schema.define(:version => 20081106212028) do
 
   create_table "users", :force => true do |t|
     t.string   "screen_name",            :limit => 50
+    t.string   "email"
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "remember_token"
@@ -30,5 +31,6 @@ ActiveRecord::Schema.define(:version => 20081106212028) do
   end
 
   add_index "users", ["screen_name"], :name => "index_users_on_screen_name"
+  add_index "users", ["email"], :name => "index_users_on_email"
 
 end
