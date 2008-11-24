@@ -1,8 +1,40 @@
 
-<h1>Register</h1>
+<h1>Registration:</h1><br />
  
 <% form_for @user do |f| %>
+
   <%= f.error_messages %>
-  <%= render :partial => "form", :object => f %>
+	
+	<h4>Authentication:</h4>
+  <p>
+    <label for="openid_identifier">If you would like to register with OpenId enter it below:</label><br />
+    <%= f.text_field "openid_identifier" %><br />
+	  <%= f.submit "Authenticate" %>
+  </p>
+
+	<p>if you aren't using OpenId you will need to enter a password:</p>
+	
+	<p>
+		<%= f.label :password %><br />
+		<%= f.password_field :password %>
+	</p>
+	
+	<p>
+		<%= f.label :confirm_password %><br />
+		<%= f.password_field :confirm_password %>
+	</p>
+	
+	<h4>Identity:</h4>
+	<p>
+		<%= f.label :screen_name %><br />
+		<%= f.text_field :screen_name %>
+	</p>
+	
+	<p>
+		<%= f.label :email %><br />
+		<%= f.text_field :email %>
+	</p>
+
   <%= f.submit "Register" %>
+
 <% end %>

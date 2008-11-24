@@ -19,8 +19,8 @@
 		  <%= f.error_messages %>
 
 		  <p>
-				<%= label_tag :openid_url, "Enter your email or" %> <%= link_to 'OpenId', 'http://openid.net', :title => 'Learn more about OpenId' %><br />
-			  <%= text_field_tag :openid_url %><br />
+				<%= label_tag :openid_identifier, "Enter your email or" %> <%= link_to 'OpenId', 'http://openid.net', :title => 'Learn more about OpenId' %><br />
+			  <%= text_field_tag :openid_identifier %><br />
 			 	<%= f.submit "Go" %><br />
 			</p>
 			
@@ -29,6 +29,9 @@
 		<% end %>
 
 		<p>Not a member? You can <%= link_to 'Join Free', signup_url %>.</p>
+		
+		<p>If needed you can <%= link_to 'reset your password', password_path %>.</p>
+		
 	</div>
 	
 	<div id='spinner' style='display:none;'>

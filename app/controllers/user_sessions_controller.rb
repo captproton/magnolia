@@ -1,5 +1,7 @@
 class UserSessionsController < ApplicationController
 
+  include OpenIdUtils
+  
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy
 
@@ -12,45 +14,6 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new
   end
 
-  # Logs the user in.
-  def create
-    
-    respond_to do |wants|
-
-      # The un/pw based form submits a regular html request
-      wants.html do
-        
-        # if params[:user_session][:password]
-          # do regular login
-          
-        @user_session = UserSession.new(params[:user_session])
-        if @user_session.save
-          flash[:notice] = 'Login successful!'
-          redirect_back_or_default root_url
-        else
-          @show_password_form = true
-          render :action => :new
-        end
-      end
-      
-      # The openid/email form uses Ajax
-      wants.js do 
-        # is the identity field an email or an OpenId
-        # if openId do openId
-        # if email
-          # try EAUT
-          # try directed id on the domain portion
-          # else display the password based login form
-        @section = 'authentication'
-        @user_session = UserSession.new
-        render :update do |page|
-          page['authentication_form_container'].replace :partial => 'password_form'
-          # page.redirect_to root_url
-        end
-      end
-    end
-  end
-
   # Logs the user out.
   # Mapped to route /logout
   def destroy
@@ -60,11 +23,49 @@ class UserSessionsController < ApplicationController
   end
   
   private
-  
-    # Exposes the data needed to render the AuthenticationProvider select box and the users remembered selection.
-    def set_auth_providers
-      # @preferred_auth_provider = cookies[:Magnolia_Auth_Method] ? Struct::AuthProvider.new( cookies[:Magnolia_Auth_Method] ) : Struct::AuthProvider.new( 'openid' )
-      # @windows_app_id = ENV['WINDOWS_LIVE_ID']
+    
+    # Logs the user in.
+    def non_openid_create
+
+      respond_to do |wants|
+        
+        # This condition will occur if the email/pw form is being submitted
+        wants.html do
+          
+          @user_session = UserSession.new(params[:user_session])
+          if @user_session.save
+            flash[:notice] = 'Login successful!'
+            redirect_back_or_default root_url
+          else
+            @show_password_form = true
+            render :action => :new
+          end
+        end
+
+        # If we get here it means a user entered an email address and we need to 
+        # update the page to display the password form
+        wants.js do 
+
+          @user_session = UserSession.new(:email => params[:openid_url])
+          render :update do |page|
+            page['authentication_form_container'].replace :partial => 'password_form'
+          end
+        
+        end
+      end
     end
   
+  # called from OpenIdsHelper#open_id_authentication on success
+  def successful_openid_authentication(identity_url, registration = {})
+    
+    if user = User.find_by_open_id(identity_url)
+      @user_session = UserSession.create(user)
+      redirect_back_or_default home_url
+      
+    else
+      failed_openid_authentication('We were unable to authenticate you with this OpenId.')
+    end
+  end
+    
+    
 end

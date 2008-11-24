@@ -25,4 +25,7 @@ class User < ActiveRecord::Base
   
   acts_as_authentic  
   
+  attr_accessor :openid_identifier
+  has_many :open_ids, :dependent => :destroy
+
 end

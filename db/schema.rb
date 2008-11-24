@@ -9,7 +9,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081106212028) do
+ActiveRecord::Schema.define(:version => 20081119192750) do
+
+  create_table "open_id_authentication_associations", :force => true do |t|
+    t.integer "issued"
+    t.integer "lifetime"
+    t.string  "handle"
+    t.string  "assoc_type"
+    t.binary  "server_url"
+    t.binary  "secret"
+  end
+
+  create_table "open_id_authentication_nonces", :force => true do |t|
+    t.integer "timestamp",                  :null => false
+    t.string  "server_url"
+    t.string  "salt",       :default => "", :null => false
+  end
+
+  create_table "open_ids", :force => true do |t|
+    t.string  "openid_identifier"
+    t.integer "user_id"
+  end
+
+  add_index "open_ids", ["user_id"], :name => "index_open_ids_on_user_id"
+  add_index "open_ids", ["openid_identifier"], :name => "index_open_ids_on_openid_identifier"
 
   create_table "users", :force => true do |t|
     t.string   "screen_name",            :limit => 50

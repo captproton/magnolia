@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  include OpenIdUtils
+  
   layout 'basic'
   
   before_filter :require_no_user, :only => [:new, :create]
@@ -23,23 +25,6 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @user }
     end
   end
-
-  # POST /users
-  # POST /users.xml
-  def create
-    @user = User.new(params[:user])
-
-    respond_to do |format|
-      if @user.save
-        flash[:notice] = "Account registered!"
-        format.html { redirect_back_or_default user_url(@user) }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => :new }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
     
   # GET /users/1
   # GET /users/1.xml
@@ -52,5 +37,24 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @user }
     end
   end
+  
+  private
 
+    # POST /users
+    # POST /users.xml
+    def non_openid_create
+      @user = User.new(params[:user])
+
+      respond_to do |format|
+        if @user.save
+          flash[:notice] = "Account registered!"
+          format.html { redirect_back_or_default user_url(@user) }
+          format.xml  { render :xml => @user, :status => :created, :location => @user }
+        else
+          format.html { render :action => :new }
+          format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        end
+      end
+    end
+  
 end
