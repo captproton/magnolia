@@ -1,0 +1,31 @@
+ActsAsEaut
+==========
+
+Author: Jesse Clark, jesse at jesseclark.com
+
+This plugin is pretty much a pluginized port of Michael Richardson's python EAUT library.
+
+Briefly, EAUT is an open protocol to allow standard email addresses to be transformed into URLs for services like OpenID.
+
+For more info see: http://eaut.org/
+
+To install run:
+
+script/plugin install http://eaut.googlecode.com/svn/code/rails/trunk/acts_as_eaut
+
+
+Example
+=======
+
+	# get_openid_for_email( url ) is the only method you need to call.
+  include Acts::Eaut
+  
+  acts_as_eaut
+
+   def authenticate_open_id
+     params[:openid_url] = get_openid_for_email(params[:openid_url]) if params[:openid_url].include?('@')
+     verify_open_id
+   end
+
+
+Copyright (c) 2008 Gnolia Systems, LP, see LICENSE file for license information
