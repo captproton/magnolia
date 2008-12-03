@@ -1,43 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
-  
-  describe "responding to GET index" do
-
-    describe "when logged in" do
-
-      before(:each) do
-        login_as(mock_user)
-      end
-      
-      it "should expose all users as @users" do
-        User.should_receive(:find).with(:all).and_return([mock_user])
-        get :index
-        assigns[:users].should == [mock_user]
-      end
-
-      describe "with mime type of xml" do
-  
-        it "should render all users as xml" do
-          request.env["HTTP_ACCEPT"] = "application/xml"
-          User.should_receive(:find).with(:all).and_return(users = mock("Array of Users"))
-          users.should_receive(:to_xml).and_return("generated XML")
-          get :index
-          response.body.should == "generated XML"
-        end
-    
-      end
-    end
-    
-    describe "when not logged in" do
-      it "should redirect to login page" do       
-        get :index
-        response.should redirect_to( login_url )
-        flash[:notice].should ==('You must be logged in to access this page.')
-      end
-    end
-    
-  end
 
   describe "responding to GET show" do
 
@@ -77,10 +40,23 @@ describe UsersController do
   describe "responding to GET new" do
     
     describe "when not logged in" do
+      
       it "should expose a new user as @user" do
         User.should_receive(:new).and_return(mock_user)
         get :new
         assigns[:user].should equal(mock_user)
+      end
+      
+      it 'should render the open_id form if third party selected' do        
+        User.should_receive(:new).and_return(mock_user)
+        get :new, :registration_method => 'third_party'
+        response.should render_template('third_party')
+      end
+      
+      it 'should render the new form if third party not selected' do        
+        User.should_receive(:new).and_return(mock_user)
+        get :new, :registration_method => 'magnolia'
+        response.should render_template('new')
       end
     end
     
@@ -97,7 +73,40 @@ describe UsersController do
   describe "responding to POST create" do
     
     describe "when not logged in" do
-      describe "with valid params" do
+      
+      describe "with open_id_identifier" do
+        
+        describe "which is an email" do
+          
+          describe "that is already in use" do
+            it "should return an error message" do
+              @controller.should_receive(:using_open_id?).and_return(false)
+              User.should_receive(:find_by_email).with('foo@myopenid.com').and_return(mock_user)
+              post :create, :openid_identifier => 'foo@myopenid.com'
+              flash[:error].should match( /email/ )
+            end
+            
+            it "should render the third_party form" do              
+              @controller.should_receive(:using_open_id?).and_return(false)
+              User.should_receive(:find_by_email).with('foo@myopenid.com').and_return(mock_user)
+              post :create, :openid_identifier => 'foo@myopenid.com'
+              response.should render_template('third_party')
+            end
+          end
+          
+          describe "that is not in use" do
+            it "should call authenticate_new_user" do
+              @controller.should_receive(:using_open_id?).and_return(false)
+              @controller.should_receive(:authenticate_new_user).and_return(false)
+              User.should_receive(:find_by_email).with('foo@myopenid.com').and_return(nil)
+              post :create, :openid_identifier => 'foo@myopenid.com'
+            end
+          end
+          
+        end
+      end
+      
+      describe "with email params" do
       
         it "should expose a newly created user as @user" do
           User.should_receive(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))

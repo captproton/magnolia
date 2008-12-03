@@ -2,27 +2,23 @@ class UsersController < ApplicationController
 
   include OpenIdUtils
   
-  layout 'basic'
+  layout 'full_width'
   
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update, :index]
-  
-  def index
-    @users = User.find :all
-    respond_to do |format|
-      format.html { render :layout => 'full_width' }
-      format.xml  { render :xml => @users }
-    end
-  end
   
   # GET /users/new
   # GET /users/new.xml
   def new
     @user = User.new
-
+    
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
+      format.html do
+        case params[:registration_method]   
+        when 'third_party'
+          render :template => 'users/third_party'  
+        end
+      end
     end
   end
     
@@ -39,10 +35,20 @@ class UsersController < ApplicationController
   end
   
   private
-
+    
+    def email_authentication
+      if user = User.find_by_email( params[:openid_identifier] )
+        flash[:error] = 'This email is already in use.'
+        @openid_identifier = params[:openid_identifier]
+        render :template => 'users/third_party'
+      else
+        authenticate_new_user
+      end
+    end
+    
     # POST /users
     # POST /users.xml
-    def non_openid_create
+    def non_open_id_create
       @user = User.new(params[:user])
 
       respond_to do |format|

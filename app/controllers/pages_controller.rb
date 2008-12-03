@@ -1,8 +1,10 @@
 class PagesController < ApplicationController
 
-  layout 'basic'
-
-  def index
+  layout 'full_width'
+  
+  def show
     @user = @current_user
+    render :template => "pages/#{params[:page]}"
   end
+  
 end

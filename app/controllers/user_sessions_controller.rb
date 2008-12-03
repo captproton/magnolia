@@ -24,8 +24,12 @@ class UserSessionsController < ApplicationController
   
   private
     
+    def email_authentication
+      user = User.find_by_email( params[:openid_identifier] ) ? authenticate_existing_user( user ) : authenticate_new_user
+    end
+    
     # Logs the user in.
-    def non_openid_create
+    def non_open_id_create
 
       respond_to do |wants|
         

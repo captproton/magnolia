@@ -50,23 +50,3 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
 
-# module Spec
-#   module Example
-#     module BeforeAndAfterHooks
-#       
-#       def pop_before(scope)
-#         parts = before_parts_from_scope(scope)
-#         parts.pop
-#       end
-#       
-#     end
-#   end
-# end
-# 
-# # Handle doing a different before_each method for a collection of items in an abstract way
-# def for_each_variant before_method, *variants
-#  variants.each do |variant|
-#    self.send( before_method.to_sym, variant )
-#    yield variant
-#  end
-# end

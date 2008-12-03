@@ -1,5 +1,8 @@
 module OpenIdUtils
-
+  
+  include Acts::Eaut
+  acts_as_eaut
+  
   # The entry point action for User and UserSession creation.
   # Applies business rules to determine if open_id_authentication should be used vs. the regular un/pw process.
   #
@@ -22,13 +25,17 @@ module OpenIdUtils
       open_id_authentication
       
     else # the field entered is an email 
-
-      user = User.find_by_email( params[:openid_identifier] ) ? authenticate_existing_user( user ) : authenticate_new_user
+      email_authentication
 
     end # if using_open_id?
   end
   
   private
+  
+    # Override this method to provide behaviour for email authentication process.
+    def email_authentication
+      throw "Implement me in this controller!"
+    end
   
     # Starts OpenId authentication if there is an open_id associated with the given user. 
     # Otherwise starts the non-OpenId process.
@@ -105,7 +112,7 @@ module OpenIdUtils
     # overrides OpenIdAuthentication#using_open_id?
     def using_open_id?(identity_url = nil) #:doc:
       identity_url ||= params[:openid_identifier] || params[:openid_url]
-      !identity_url.blank? || !identity_field_is_email(identity_url) || params[:open_id_complete]
+      identity_url.blank? ? false : !identity_field_is_email?(identity_url) || params[:open_id_complete]
     end
     
     # Returns true if params[:openid_url] contains an email address

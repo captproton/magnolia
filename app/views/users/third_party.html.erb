@@ -1,0 +1,27 @@
+<h1>Join Ma.gnolia</h1>
+
+<% form_tag( users_path ) do %>
+
+<div id='third_party_instructions' style='float: right; width: 450px; border: 1px dashed grey; padding: 1em;'>
+	<p>
+		How does this work? How does this work? How does this work? How does this work? How does this work? How does this work?
+		How does this work? How does this work? How does this work? How does this work? How does this work? How does this work?
+	</p>
+	<%= link_to "I'll make a Ma.gnolia only password instead...", new_user_path %>
+</div>
+
+<p>	
+	<%= label_tag 'openid_identifier', 'Enter email or OpenId URL' %><br />
+  <%= text_field_tag "openid_identifier" %>
+	<%= link_to_function "What services can I use here?", "$('third_party_instructions').toggle()", 
+			:style => 'margin-left: 3em;', :id => 'instruction_link' %>
+</p>
+
+<p>or use your <%= link_to 'Facebook account', root_url %> </p>
+<% javascript_tag do -%>
+	$('instruction_link').show();
+	$('third_party_instructions').hide();
+<% end %>
+
+<%= submit_tag 'Next' %>
+<% end -%>

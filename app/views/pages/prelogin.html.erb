@@ -1,0 +1,31 @@
+<h1>Join Ma.gnolia</h1>
+
+<p>Text about signing up. Text about signing up. Text about signing up. Text about 
+signing up. Text about signing up. Text about signing up. Text about signing up.</p>
+
+<p>How do you want to sign in?</p>
+<% form_tag( new_user_path, :method => 'get' ) do %>
+
+<div id='third_party_instructions' style='float: right; width: 450px; border: 1px dashed grey; padding: 1em;'>
+	How does this work? How does this work? How does this work? How does this work? How does this work? How does this work?
+	How does this work? How does this work? How does this work? How does this work? How does this work? How does this work?
+</div>
+
+<p>
+	<%= radio_button_tag 'registration_method', 'third_party', true %>
+	<%= label_tag 'registration_method_third_party', 'Use an account from another service' %>
+	<%= link_to_function "How does this work?", "$('third_party_instructions').toggle()", 
+			:style => 'margin-left: 3em;', :id => 'instruction_link' %>
+</p>
+<% javascript_tag do -%>
+	$('instruction_link').show();
+	$('third_party_instructions').hide();
+<% end %>
+
+<p>
+	<%= radio_button_tag 'registration_method', 'magnolia' %>
+	<%= label_tag 'registration_method_magnolia', 'Make a new password just for Ma.gnolia' %>
+</p>
+
+<%= submit_tag 'Next' %>
+<% end -%>

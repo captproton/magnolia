@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(:version => 20081119192750) do
     t.integer "user_id"
   end
 
-  add_index "open_ids", ["user_id"], :name => "index_open_ids_on_user_id"
   add_index "open_ids", ["openid_identifier"], :name => "index_open_ids_on_openid_identifier"
+  add_index "open_ids", ["user_id"], :name => "index_open_ids_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "screen_name",            :limit => 50
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20081119192750) do
     t.string   "activation_code",        :limit => 40
   end
 
-  add_index "users", ["screen_name"], :name => "index_users_on_screen_name"
   add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["screen_name"], :name => "index_users_on_screen_name"
 
 end
