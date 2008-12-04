@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   # This action will be for displaying a user's profile page. Probably will just redirect to a 'People' resource.
   def show
-    @user = User.find( params[:id] )
+    @user = User.find_by_screen_name( params[:id] )
 
     respond_to do |format|
       format.html # show.html.erb

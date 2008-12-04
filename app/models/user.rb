@@ -27,5 +27,9 @@ class User < ActiveRecord::Base
   
   attr_accessor :openid_identifier
   has_many :open_ids, :dependent => :destroy
-
+  
+  def to_param
+  	screen_name
+  end
+  
 end
