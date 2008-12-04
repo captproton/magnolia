@@ -711,97 +711,23 @@ Object.extend(Object.extend(Magnolia.Bookmark.prototype, Blueprint.Basic), {
   }
 });
 
-// Legacy code needs clean-up (is it still used anywhere?!)
 
-Magnolia.append_field = function(element, value) {
+function checkScreenName(name, element, token){
+  $(element).update("<img src=\"/images/chrome/spinner_on_b.gif\" class=\"status_icon\" /> Checking...");
+  new Ajax.Updater(element, '/registration/check_screen_name?name=' + encodeURIComponent(name) + '&authenticity_token=' + token, {evalScripts:true});
+}
+
+function checkEmail(email, element, token){
+  $(element).update("<img src=\"/images/chrome/spinner_on_b.gif\" class=\"status_icon\" /> Checking...");
+  new Ajax.Updater(element, '/registration/check_email?email=' + encodeURIComponent(email) + '&authenticity_token=' + token, {evalScripts:true});
+}
+
+function checkPasswords(element) {
   element = $(element);
-  var currentValue = element.value;
-  value = value.toString();
-  
-  if (currentValue.empty())
-    element.value = value;
-  else if (currentValue.include(value))
-    return value;
-  else if (currentValue.endsWith(','))
-    element.value = currentValue + ' ' + value;
-  else if (currentValue.match(/,\s+$/))
-    element.value = currentValue + value;
-  else element.value = currentValue + ', ' + value;  
-  return value;
-};
-
-function checkScreenName(name, element){
-  $(element).update("<img src=\"/images/chrome/spinner_on_b.gif\" class=\"status_icon\" /> Checking...");
-  new Ajax.Updater(element, '/register/check_screen_name?name='+name, {evalScripts:true});
-}
-
-function checkEmail(email, element){
-  $(element).update("<img src=\"/images/chrome/spinner_on_b.gif\" class=\"status_icon\" /> Checking...");
-  new Ajax.Updater(element, '/register/check_email?email='+email, {evalScripts:true});
-}
-
-function createCookie(name,value,days) {
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime()+(days*24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-  } else var expires = "";
-  document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
-
-function eraseCookie(name) {
-  createCookie(name,'',-1);
-}
-
-function bookmark_out(_event,link,name) {
-  if(link.clickedOnce){
-    link.clickedOnce=false;
-    return false;
-  } else link.clickedOnce=true;
-    
-  var keydown = _event.altKey || _event.metaKey;
-  if(!keydown) {
-    var timeoutid = setTimeout(function(){
-      req.abort();
-      link.dispatchEvent(_event);
-      }, 2000);
-    var url = "/bookmarks/" + name + "/out";
-    var req = new Ajax.Request(url, {
-      method: 'GET',
-      onComplete: function() {
-        clearTimeout(timeoutid);
-        link.dispatchEvent(_event);
-      } 
-    });
-  }    
-  return true;
-}
-
-function toggleSelectAll(classname) {
-  var checkboxes = $$('.' + classname);
-  if(checkboxes.all(function(value, index) { return value.checked }))
-    checkboxes.each(function(box, index){ box.checked = false });
-  else
-    checkboxes.each(function(box, index){ box.checked = 'checked' });
-}
-
-function validateMessageForm() {
-  if (!$('subject_line').present())
-    alert('Please insert a subject for this mail');
-  else if (!$('message_body').present())
-    alert('Please add a message for this mail');
-  else return true;
-  DialogBox.close();
-  return false;
+  var password = $('user_password'), confirm_password = $('user_confirm_password');
+  if( !(password.present() && confirm_password.present()) )
+    element.update("<img src=\"/images/icons/yellow_reject.gif\" class=\"status_icon\"/> Passwords must not be blank.");
+  else if(password.value == confirm_password.value) 
+    element.update("<img src=\"/images/icons/green_accept.gif\" class=\"status_icon\"/> Password verified.");
+  else element.update("<img src=\"/images/icons/yellow_reject.gif\" class=\"status_icon\"/> Passwords do not match.");
 }

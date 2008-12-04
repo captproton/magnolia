@@ -14,6 +14,9 @@ ActionController::Routing::Routes.draw do |map|
   # map.namespace :admin do |admin|      
   # end
   
+  map.validate_screen_name 'registration/check_screen_name', :controller => 'ajax_validations', :action => 'validate_screen_name'
+  map.validate_email 'registration/check_email', :controller => 'ajax_validations', :action => 'validate_email'
+                                                    
 	map.root :controller => 'pages', :action => 'show', :page => 'home'
 	
 	map.connect '*page' , :controller => 'pages' , :action => 'show'

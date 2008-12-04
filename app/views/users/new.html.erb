@@ -4,35 +4,36 @@
 <% form_for @user do |f| %>
 
   <%= f.error_messages %>
-	
-	<h4>Authentication:</h4>
-  <p>
-    <label for="openid_identifier">If you would like to register with OpenId enter it below:</label><br />
-    <%= f.text_field "openid_identifier" %><br />
-	  <%= f.submit "Authenticate" %>
-  </p>
 
-	<p>if you aren't using OpenId you will need to enter a password:</p>
+	<p>
+		<%= f.label :email %><br />
+		<%= f.text_field :email, :onblur => "checkEmail(this.value, 'verify_email', '#{form_authenticity_token}')" %>
+	</p>
+	<p id="verify_email">
+		<%= email_taken?(@user.email) unless @user.email.blank? %>
+	</p>
+	
+	<p>We'll send a confirmation email to this address.</p>
+	
+	<p>
+		<%= f.label :screen_name %><br />
+		<%= f.text_field :screen_name, :onblur => "checkScreenName(this.value, 'check_username', '#{form_authenticity_token}')" %>
+	</p>
+	<p id="check_username">
+		<%= screen_name_taken?(@user.screen_name) unless @user.screen_name.blank? %>
+	</p>
 	
 	<p>
 		<%= f.label :password %><br />
-		<%= f.password_field :password %>
+		<%= f.password_field :password, :onblur => "checkPasswords('check_password')" %>
 	</p>
 	
 	<p>
 		<%= f.label :confirm_password %><br />
-		<%= f.password_field :confirm_password %>
+		<%= f.password_field :confirm_password, :onblur => "checkPasswords('check_password')" %>
 	</p>
 	
-	<h4>Identity:</h4>
-	<p>
-		<%= f.label :screen_name %><br />
-		<%= f.text_field :screen_name %>
-	</p>
-	
-	<p>
-		<%= f.label :email %><br />
-		<%= f.text_field :email %>
+	<p id="check_password">
 	</p>
 
   <%= f.submit "Register" %>
