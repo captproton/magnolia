@@ -12,12 +12,15 @@ describe "/users/new.html.erb" do
   end
 
   it "should render new form" do
+    
+    template.should_receive(:render).with( :partial => "/users/email_field", :locals => {:f => anything()} )
+    template.should_receive(:render).with( :partial => "/users/screen_name_field", :locals => {:f => anything()} )
+    
     render "/users/new.html.erb"
     
     response.should have_tag("form[action=?][method=post]", users_path) do
-      with_tag("input#user_screen_name[name=?]", "user[screen_name]")
       with_tag("input#user_password[name=?]", "user[password]")
-      with_tag("input#user_confirm_password[name=?]", "user[confirm_password]")
+      with_tag("input#user_password_confirmation[name=?]", "user[password_confirmation]")
     end
   end
 end

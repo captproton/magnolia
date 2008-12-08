@@ -1,0 +1,14 @@
+<h1>Join Ma.gnolia</h1>
+
+<p>
+	Something went wrong and we couldn't verify your external password. You can try another 
+3rd party provider, or join by making a new Ma.gnolia password instead.
+</p>
+
+<% form_tag new_third_party_registration_path, :method => 'get', :style => 'float: left;' do %>
+	<%= submit_tag 'Try Another Account', :name => nil %>
+<% end -%>
+
+<% form_tag new_user_path, :method => 'get' do %>
+	<%= submit_tag 'Create A Ma.gnolia Password', :name => nil %>
+<% end -%>

@@ -109,7 +109,14 @@ module OpenIdAuthentication
 
       open_id_request = open_id_consumer.begin(identity_url)
       add_simple_registration_fields(open_id_request, options)
-      redirect_to(open_id_redirect_url(open_id_request, return_to, method))
+      if options.delete(:using_ajax)
+        render :update do |page|
+          page.redirect_to open_id_redirect_url( open_id_request, return_to, method )
+        end
+      else
+        redirect_to(open_id_redirect_url(open_id_request, return_to, method))
+      end
+      
     rescue OpenIdAuthentication::InvalidOpenId => e
       yield Result[:invalid], identity_url, nil
     rescue OpenID::OpenIDError, Timeout::Error => e

@@ -1,0 +1,25 @@
+<h1>Join Ma.gnolia</h1>
+<br />
+ 
+
+<p>You have been authenticated. To complete your registration we just need a little more information.</p>
+
+<% form_for @user, :url => third_party_registration_path, :html => { :method => 'put' } do |f| %>
+
+  <%= f.error_messages %>
+	
+	<%= render :partial => '/users/screen_name_field', :locals => { :f => f } %>
+	
+	<p>
+		For the last step, where can we send Ma.gnolia-related notifications? You can set specific preferences in Orientation.
+	</p>
+	
+	<%= render :partial => '/users/email_field', :locals => { :f => f } %>
+	
+	<p>
+		By signing in to join, you agree to Ma.gnolia's <%= link_to "Terms of Service", tos_url, :title => "View Ma.gnolia's Terms of Service", :target => "_blank" %> and <%= link_to "Privacy Policy", privacy_url, :title => "View Ma.gnolia's Privacy Policy", :target => "_blank" %>.
+	</p>
+	
+  <%= f.submit "Register and go to Home page", :name => 'home', :style => 'float: left;' %><%= f.submit "Register and begin Orientation", :name => 'orientation' %>
+
+<% end %>

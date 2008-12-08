@@ -11,7 +11,7 @@ describe UsersController do
       end
       
       it "should expose the requested user as @user" do
-        User.should_receive(:find).with("37").and_return(mock_user)
+        User.should_receive(:find).with( :first, {:conditions=>{:screen_name=>"37"}} ).and_return(mock_user)
         get :show, :id => "37"
         assigns[:user].should equal(mock_user)
       end
@@ -20,7 +20,7 @@ describe UsersController do
 
         it "should render the requested user as xml" do
           request.env["HTTP_ACCEPT"] = "application/xml"
-          User.should_receive(:find).with("37").and_return(mock_user)
+          User.should_receive(:find).with( :first, {:conditions=>{:screen_name=>"37"}} ).and_return(mock_user)
           mock_user.should_receive(:to_xml).and_return("generated XML")
           get :show, :id => "37"
           response.body.should == "generated XML"
@@ -47,10 +47,10 @@ describe UsersController do
         assigns[:user].should equal(mock_user)
       end
       
-      it 'should render the open_id form if third party selected' do        
+      it 'should redirect to third party registration form if third party selected' do        
         User.should_receive(:new).and_return(mock_user)
         get :new, :registration_method => 'third_party'
-        response.should render_template('third_party')
+        response.should redirect_to(new_third_party_registration_path)
       end
       
       it 'should render the new form if third party not selected' do        
@@ -74,39 +74,7 @@ describe UsersController do
     
     describe "when not logged in" do
       
-      describe "with open_id_identifier" do
-        
-        describe "which is an email" do
-          
-          describe "that is already in use" do
-            it "should return an error message" do
-              @controller.should_receive(:using_open_id?).and_return(false)
-              User.should_receive(:find_by_email).with('foo@myopenid.com').and_return(mock_user)
-              post :create, :openid_identifier => 'foo@myopenid.com'
-              flash[:error].should match( /email/ )
-            end
-            
-            it "should render the third_party form" do              
-              @controller.should_receive(:using_open_id?).and_return(false)
-              User.should_receive(:find_by_email).with('foo@myopenid.com').and_return(mock_user)
-              post :create, :openid_identifier => 'foo@myopenid.com'
-              response.should render_template('third_party')
-            end
-          end
-          
-          describe "that is not in use" do
-            it "should call authenticate_new_user" do
-              @controller.should_receive(:using_open_id?).and_return(false)
-              @controller.should_receive(:authenticate_new_user).and_return(false)
-              User.should_receive(:find_by_email).with('foo@myopenid.com').and_return(nil)
-              post :create, :openid_identifier => 'foo@myopenid.com'
-            end
-          end
-          
-        end
-      end
-      
-      describe "with email params" do
+      describe "with valid params" do
       
         it "should expose a newly created user as @user" do
           User.should_receive(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))

@@ -6,6 +6,7 @@ class UserSessionsController < ApplicationController
   before_filter :require_user, :only => :destroy
 
   layout 'full_width'
+  helper_method :open_id_redirect_url
   
   # Displays the login form.
   # Mapped to route /login
@@ -22,10 +23,64 @@ class UserSessionsController < ApplicationController
     redirect_to login_url
   end
   
+  # The entry point action for UserSession creation.
+  # Applies business rules to determine if open_id_authentication should be used vs. the regular un/pw process.
+  #
+  # if the user entered an email
+  #   if the email matches an account 
+  #     with an associated openid, 
+  #       do openid
+  #     WITHOUT an associated openid, 
+  #       do un/pw
+  #   else no account
+  #     if EAUT returns an openid 
+  #       do openid
+  #     else 
+  #       do un/pw
+  # else
+  #   try openid with whatever the user provided
+  def create
+    
+    if using_open_id?
+      open_id_authentication :using_ajax => true
+      
+    else # the field entered is an email 
+      user = User.find_by_email( params[:openid_identifier] ) ? authenticate_existing_user( user ) : authenticate_new_user
+
+    end
+  end
+  
   private
     
-    def email_authentication
-      user = User.find_by_email( params[:openid_identifier] ) ? authenticate_existing_user( user ) : authenticate_new_user
+    # Starts OpenId authentication if there is an open_id associated with the given user. 
+    # Otherwise starts the non-OpenId process.
+    def authenticate_existing_user( user )
+      
+      if open_id = OpenId.find_by_user_id( user.id )
+        params[:openid_identifier] = open_id.openid_url
+        open_id_authentication :using_ajax => true
+      else          
+        non_open_id_create
+      end
+    end
+    
+    # Starts OpenId authentication if the email entered in openid_identifier can be translated to 
+    # an OpenId using EAUT.
+    # Otherwise starts the non-OpenId process.
+    def authenticate_new_user
+    
+      # try EAUT # TODO: Refactor acts_as_eaut to yield a result wrapping status and error messages
+      begin
+        eaut_id = get_openid_for_email( params[:openid_identifier], :use_fallback_service => false )
+      rescue
+      end
+      
+      if eaut_id
+        params[:openid_identifier] = eaut_id
+        open_id_authentication :using_ajax => true
+      else
+        non_open_id_create
+      end
     end
     
     # Logs the user in.
@@ -64,7 +119,7 @@ class UserSessionsController < ApplicationController
     
     if user = User.find_by_open_id(identity_url)
       @user_session = UserSession.create(user)
-      redirect_back_or_default home_url
+      redirect_back_or_default root_url
       
     else
       failed_openid_authentication('We were unable to authenticate you with this OpenId.')

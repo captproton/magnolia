@@ -48,9 +48,10 @@ ActiveRecord::Schema.define(:version => 20081119192750) do
     t.string   "last_login_ip",          :limit => 50
     t.string   "current_login_ip",       :limit => 50
     t.string   "first_login_ip",         :limit => 50
-    t.boolean  "activated",                            :default => false
+    t.boolean  "active",                               :default => false
     t.boolean  "accepted_service_terms",               :default => false
     t.string   "activation_code",        :limit => 40
+    t.string   "perishable_token",                     :default => "",    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

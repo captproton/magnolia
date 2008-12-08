@@ -724,10 +724,10 @@ function checkEmail(email, element, token){
 
 function checkPasswords(element) {
   element = $(element);
-  var password = $('user_password'), confirm_password = $('user_confirm_password');
-  if( !(password.present() && confirm_password.present()) )
+  var password = $('user_password'), password_confirmation = $('user_password_confirmation');
+  if( !(password.present() && password_confirmation.present()) )
     element.update("<img src=\"/images/icons/yellow_reject.gif\" class=\"status_icon\"/> Passwords must not be blank.");
-  else if(password.value == confirm_password.value) 
+  else if(password.value == password_confirmation.value) 
     element.update("<img src=\"/images/icons/green_accept.gif\" class=\"status_icon\"/> Password verified.");
   else element.update("<img src=\"/images/icons/yellow_reject.gif\" class=\"status_icon\"/> Passwords do not match.");
 }

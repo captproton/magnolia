@@ -23,13 +23,86 @@
 
 class User < ActiveRecord::Base
   
-  acts_as_authentic  
-  
+  acts_as_authentic :validate_fields => false # authlogic's default validations don't play nice with OpenId
+  validate :validate_email, :validate_screen_name, :validate_password
+    
   attr_accessor :openid_identifier
+  attr_accessor :password_confirmation
+  
   has_many :open_ids, :dependent => :destroy
   
   def to_param
   	screen_name
   end
+  
+  def self.find_by_open_id(open_id)
+    query = <<-QUERY
+      SELECT users.* FROM users, open_ids
+      WHERE open_ids.openid_identifier = ?
+      AND open_ids.user_id = users.id
+      LIMIT 1
+    QUERY
+    user = User.find_by_sql( [ query, OpenIdAuthentication.normalize_url( open_id ) ] )
+    user.empty? ? nil : user[0]
+  end
+  
+  
+  ###############
+  # Validations #
+  ###############
+  
+  def validate_email
+    if email.to_s.empty?
+      errors.add_to_base( "You didn't fill out the email address field. Please enter your email address and try again.")
+
+    elsif !(email.to_s =~ /^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})$/)
+      errors.add_to_base( "The email address you entered isn't valid. Please make sure your email address is in the name@email.com format.")
+
+    elsif self.class.find( :first, 
+                           :conditions => ( new_record? ? 
+                                              ["email = ?", 
+                                              email] : 
+                                              ["email = ? AND #{self.class.primary_key} <> ?", 
+                                            email, 
+                                            id ] ) )
+      errors.add_to_base( "The email address you've entered is already in use. You can only have one account per email address.")
+    end    
+  end
+  
+  def validate_screen_name
+    if screen_name.to_s.empty?
+      errors.add_to_base( "You didn't choose a screen name. Please enter a screen name and try again.")
+
+    elsif screen_name.to_s.length < 2 && screen_name.to_s.length > 30
+      errors.add_to_base( "Your screen name must be between 2 and 30 characters long. Please enter a new screen name and try again.")
+
+    elsif !(screen_name.to_s =~ /^[A-Za-z0-9\-\.\_]+$/)
+      errors.add_to_base( "Your screen name can only contain letters, numbers, dots, underscores, and dashes. Please make sure your screen name only contains these characters.")
+
+    elsif self.class.find( :first, 
+                            :conditions => 
+                            ( new_record? ? 
+                              ["screen_name = ?", screen_name] : 
+                              ["screen_name = ? AND #{self.class.primary_key} <> ?", screen_name, id ] )
+                            ) 
+      errors.add_to_base( "The screen name you've chosen is already in use. Please pick another screen name and try again.")
+    end  
+  end
+  
+  def validate_password
+    # TODO: Check if we should do any pw length or contents validation...
+    if password.to_s.empty? and open_ids.empty? # and self.facebook_identity.nil?
+      errors.add_to_base( "You didn't choose a password. Please enter a password and try again.")      
+    elsif open_ids.empty? and (password.to_s != password_confirmation.to_s && !password_confirmation.nil?)
+      errors.add_to_base( "Your password and confirmation did not match. Please re-enter them and try again.")      
+    end    
+  end
+  
+  # def validate_on_create    
+  #   
+  #   elsif !self.accepted_tos?
+  #     errors.add_to_base( "Please check the box indicating that you agree to our terms of service.")
+  #   end
+  # end
   
 end

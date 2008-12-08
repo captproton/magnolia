@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resource :user_session
   map.resource :password
+  map.resource :third_party_registration
   
 	# ==================
 	# = Administration =
@@ -19,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.tos 'tos', :controller => 'pages', :action => 'show', :page => 'tos'
   map.privacy 'privacy', :controller => 'pages', :action => 'show', :page => 'privacy'
+  map.orientation 'orientation', :controller => 'pages', :action => 'show', :page => 'orientation'
 	map.root :controller => 'pages', :action => 'show', :page => 'home'
 	
 	map.connect '*page' , :controller => 'pages' , :action => 'show'
