@@ -12,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration
     end
     add_index :users, :screen_name
     add_index :users, :email
+    add_index :users, :perishable_token
   end
 
   def self.down
