@@ -21,6 +21,7 @@
 #  activation_code        :string(40)
 #
 
+# see also UserObserver
 class User < ActiveRecord::Base
   
   acts_as_authentic :validate_fields => false # authlogic's default validations don't play nice with OpenId
@@ -104,5 +105,6 @@ class User < ActiveRecord::Base
   #     errors.add_to_base( "Please check the box indicating that you agree to our terms of service.")
   #   end
   # end
+  
   
 end
