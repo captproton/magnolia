@@ -14,7 +14,8 @@ module AuthenticationSpecHelper
       :last_login_at => Time.now,
       :current_login_at => Time.now,
       :last_login_ip => "value for last_login_ip",
-      :current_login_ip => "value for current_login_ip"
+      :current_login_ip => "value for current_login_ip",
+      :accepted_terms_of_use => true
     }
   end
   

@@ -68,5 +68,10 @@ describe User do
     user.errors.on_base.should match(/password and confirmation did not/)
   end
   
+  it "should fail validation when terms of use wasn't accpeted" do
+    user = User.create( valid_user_attributes.except( :accepted_terms_of_use ) )
+    user.should have(1).error_on(:base)
+    user.errors.on_base.should match(/agree to our terms of use/)
+  end
   
 end

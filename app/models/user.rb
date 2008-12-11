@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
       :validate_fields => false, # authlogic's default validations don't play nice with OpenId
       :session_ids => []
       
-  validate :validate_email, :validate_screen_name, :validate_password
+  validate :validate_email, :validate_screen_name, :validate_password, :validate_terms_of_use
     
   attr_accessor :openid_identifier
   attr_accessor :password_confirmation
@@ -104,12 +104,11 @@ class User < ActiveRecord::Base
     end    
   end
   
-  # def validate_on_create    
-  #   
-  #   elsif !self.accepted_tos?
-  #     errors.add_to_base( "Please check the box indicating that you agree to our terms of service.")
-  #   end
-  # end
+  def validate_terms_of_use    
+    unless accepted_terms_of_use?
+      errors.add_to_base( "Please check the box indicating that you agree to our terms of use.")
+    end
+  end
   
   
 end
