@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :login_count
       t.datetime :last_request_at, :last_login_at, :current_login_at, :joined_at
       t.string :last_login_ip, :current_login_ip, :first_login_ip, :limit => 50
-      t.boolean :active, :accepted_service_terms, :default => false
+      t.boolean :active, :accepted_terms_of_use, :default => false
       t.string :activation_code, :limit => 40
       t.string :perishable_token, :null => false
     end

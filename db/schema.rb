@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20081119192750) do
   add_index "open_ids", ["user_id"], :name => "index_open_ids_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "screen_name",            :limit => 50
+    t.string   "screen_name",           :limit => 50
     t.string   "email"
     t.string   "crypted_password"
     t.string   "password_salt"
@@ -45,16 +45,17 @@ ActiveRecord::Schema.define(:version => 20081119192750) do
     t.datetime "last_login_at"
     t.datetime "current_login_at"
     t.datetime "joined_at"
-    t.string   "last_login_ip",          :limit => 50
-    t.string   "current_login_ip",       :limit => 50
-    t.string   "first_login_ip",         :limit => 50
-    t.boolean  "active",                               :default => false
-    t.boolean  "accepted_service_terms",               :default => false
-    t.string   "activation_code",        :limit => 40
-    t.string   "perishable_token",                     :default => "",    :null => false
+    t.string   "last_login_ip",         :limit => 50
+    t.string   "current_login_ip",      :limit => 50
+    t.string   "first_login_ip",        :limit => 50
+    t.boolean  "active",                              :default => false
+    t.boolean  "accepted_terms_of_use",               :default => false
+    t.string   "activation_code",       :limit => 40
+    t.string   "perishable_token",                    :default => "",    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
   add_index "users", ["screen_name"], :name => "index_users_on_screen_name"
 
 end

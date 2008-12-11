@@ -76,18 +76,32 @@ describe UsersController do
       
       describe "with valid params" do
       
+        before(:each) do          
+        end
+        
         it "should expose a newly created user as @user" do
           User.should_receive(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))
+          UserSession.should_receive(:find).and_return(nil)
+          UserSession.stub!(:create).and_return( mock_user_session )
           post :create, :user => {:these => 'params'}
           assigns(:user).should equal(mock_user)
         end
-
+        
         it "should redirect to the created user" do
           User.stub!(:new).and_return(mock_user(:save => true))
+          UserSession.should_receive(:find).and_return(nil)
+          UserSession.stub!(:create).and_return( mock_user_session )
           post :create, :user => {}
           response.should redirect_to(user_url(mock_user))
         end
-      
+        
+        it "should log the user in" do
+          User.should_receive(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))
+          UserSession.should_receive(:find).and_return(nil)
+          UserSession.should_receive(:create).with(mock_user).and_return(mock_user_session)
+          post :create, :user => {:these => 'params'}
+        end
+        
       end
     
       describe "with invalid params" do

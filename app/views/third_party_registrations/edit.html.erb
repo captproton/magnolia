@@ -8,18 +8,16 @@
 
   <%= f.error_messages %>
 	
-	<%= render :partial => '/users/screen_name_field', :locals => { :f => f } %>
+	<%= render :partial => '/users/screen_name_field' %>
 	
 	<p>
 		For the last step, where can we send Ma.gnolia-related notifications? You can set specific preferences in Orientation.
 	</p>
 	
-	<%= render :partial => '/users/email_field', :locals => { :f => f } %>
+	<%= render :partial => '/users/email_field' %>
 	
-	<p>
-		By signing in to join, you agree to Ma.gnolia's <%= link_to "Terms of Service", tos_url, :title => "View Ma.gnolia's Terms of Service", :target => "_blank" %> and <%= link_to "Privacy Policy", privacy_url, :title => "View Ma.gnolia's Privacy Policy", :target => "_blank" %>.
-	</p>
+	<%= render :partial => '/users/terms_of_use' %>
 	
-  <%= f.submit "Register and go to Home page", :name => 'home', :style => 'float: left;' %><%= f.submit "Register and begin Orientation", :name => 'orientation' %>
-
+	<%= render :partial => '/users/submit_registration' %>
+	
 <% end %>

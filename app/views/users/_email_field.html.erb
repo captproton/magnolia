@@ -1,7 +1,7 @@
 
 <p>
-	<%= f.label :email %><br />
-	<%= f.text_field :email, :onblur => "checkEmail(this.value, 'verify_email', '#{form_authenticity_token}')" %>
+	<%= label_tag 'user[email]', 'Email' %><br />
+	<%= text_field_tag 'user[email]', @user.email, :onblur => "checkEmail(this.value, 'verify_email', '#{form_authenticity_token}')", :size => 30 %>
 </p>
 <p id="verify_email">
 	<%= email_taken?(@user.email) unless @user.email.blank? %>

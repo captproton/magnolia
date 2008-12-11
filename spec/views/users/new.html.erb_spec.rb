@@ -4,17 +4,19 @@ describe "/users/new.html.erb" do
   include UsersHelper
   
   before(:each) do
-    assigns[:user] = stub_model(User,
+    @user = assigns[:user] = stub_model(User,
       :new_record? => true,
       :screen_name => "value for login",
       :password => "value for password"
     )
+    template.stub!(:form_authenticity_token).and_return('token')
   end
 
   it "should render new form" do
     
-    template.should_receive(:render).with( :partial => "/users/email_field", :locals => {:f => anything()} )
-    template.should_receive(:render).with( :partial => "/users/screen_name_field", :locals => {:f => anything()} )
+    template.should_receive(:render).with( :partial => "/users/email_field" )
+    template.should_receive(:render).with( :partial => "/users/screen_name_field" )
+    template.should_receive(:render).with( :partial => "/users/terms_of_use" )
     
     render "/users/new.html.erb"
     

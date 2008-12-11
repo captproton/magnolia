@@ -23,3 +23,4 @@ config.cache_store = :mem_cache_store
 
 # Configure Mail Settings
 config.action_mailer.delivery_method = :sendmail
+config.action_mailer.default_url_options = { :host => "ma.gnolia.com" }

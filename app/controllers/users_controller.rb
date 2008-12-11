@@ -40,7 +40,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:notice] = "Account registered!"
-        format.html { redirect_back_or_default user_url(@user) }
+        @user_session = UserSession.create(@user)
+        format.html { redirect_to user_url(@user) }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => :new }

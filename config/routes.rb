@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user_session
   map.resource :password
   map.resource :third_party_registration
+  map.resources :user_activations
   
 	# ==================
 	# = Administration =

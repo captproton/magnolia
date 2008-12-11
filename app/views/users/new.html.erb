@@ -4,11 +4,11 @@
 
   <%= f.error_messages %>
 
-	<%= render :partial => '/users/email_field', :locals => { :f => f } %>
+	<%= render :partial => '/users/email_field' %>
 	
 	<p>We'll send a confirmation email to this address.</p>
 	
-	<%= render :partial => '/users/screen_name_field', :locals => { :f => f } %>
+	<%= render :partial => '/users/screen_name_field' %>
 
 	<p>
 		<%= f.label :password %><br />
@@ -22,11 +22,9 @@
 	
 	<p id="check_password">
 	</p>
-
-	<p>
-		By signing in to join, you agree to Ma.gnolia's <%= link_to "Terms of Service", tos_url, :title => "View Ma.gnolia's Terms of Service", :target => "_blank" %> and <%= link_to "Privacy Policy", privacy_url, :title => "View Ma.gnolia's Privacy Policy", :target => "_blank" %>.
-	</p>
 	
-  <%= f.submit "Register" %>
+	<%= render :partial => '/users/terms_of_use' %>
+
+  <%= f.submit "Next" %>
 
 <% end %>
