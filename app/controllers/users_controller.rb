@@ -39,9 +39,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        flash[:notice] = "Account registered!"
         @user_session = UserSession.create(@user)
-        format.html { redirect_to user_url(@user) }
+        format.html { render :template => 'user_activations/new' }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => :new }

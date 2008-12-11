@@ -2,7 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UserSessionsController do
 
-
   describe "responding to GET new" do
     
     describe "when not logged in" do

@@ -1,9 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-VIEW_PATH = "/users/_email_field.html.erb"
+include UsersHelper
 
-describe VIEW_PATH do
-  include UsersHelper
+view_path = "/users/_email_field.html.erb"
+
+describe view_path do
   
   before(:each) do
     @user = assigns[:user] = stub_model(User,
@@ -16,12 +17,12 @@ describe VIEW_PATH do
   end
 
   it "should render screen_name input" do
-    render VIEW_PATH  
+    render view_path  
     response.should have_tag("input[name=?][type=text]", "user[email]")
   end
   
   it "should populate field with value from user" do    
-    render VIEW_PATH  
+    render view_path  
     response.should have_tag("input[name='user[email]'][type=text][value=?]", 'value for email')
   end
 end

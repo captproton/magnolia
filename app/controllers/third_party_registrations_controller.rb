@@ -70,7 +70,6 @@ class ThirdPartyRegistrationsController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        flash[:notice] = "Account registered!"
         session[:openid_identifier] = nil
         format.html do
           params[:commit] == 'orientation' ? redirect_to( orientation_url ) : redirect_to( user_url(@user) )

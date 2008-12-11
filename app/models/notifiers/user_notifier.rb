@@ -5,6 +5,7 @@ class UserNotifier < ActionMailer::Base
     subject "Ma.gnolia Account Activation"
     from "support@ma.gnolia.com"
     body[:user] = user
+    body[:url] = edit_user_activation_url( user.perishable_token )
   end
   
 end

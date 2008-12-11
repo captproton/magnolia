@@ -27,8 +27,8 @@ module AuthenticationSpecHelper
   end
 
   def login_as(user)
-    UserSession.should_receive(:find).and_return(mock_user_session)
-    mock_user_session.should_receive(:record).and_return(user)
+    UserSession.stub!(:find).and_return(mock_user_session)
+    mock_user_session.stub!(:record).and_return(user)
   end
   
 end

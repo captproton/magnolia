@@ -92,7 +92,7 @@ describe UsersController do
           UserSession.should_receive(:find).and_return(nil)
           UserSession.stub!(:create).and_return( mock_user_session )
           post :create, :user => {}
-          response.should redirect_to(user_url(mock_user))
+          response.should render_template( 'user_activations/new' )
         end
         
         it "should log the user in" do

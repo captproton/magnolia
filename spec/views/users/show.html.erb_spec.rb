@@ -14,6 +14,8 @@ describe "/users/show.html.erb" do
       :last_login_ip => "value for last_login_ip",
       :current_login_ip => "value for current_login_ip"
     )
+    
+    login_as @user
   end
 
   it "should render attributes in <p>" do

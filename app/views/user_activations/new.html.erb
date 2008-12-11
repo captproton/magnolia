@@ -1,0 +1,15 @@
+<h1>Join Ma.gnolia</h1>
+
+<h3>Check your Inbox... </h3>
+
+<p>
+	We've sent an email to <%= @current_user.email %>, and inside is a link you need to click to finish registration. If the link 
+	doesn't click, you can copy and paste it into your browser. After that, you're account will be ready to go!
+<p>
+
+<p>
+	If you don't see the email after 15 minutes, and it's not in your spam folder, you can have it re- 
+	sent. If things really go wrong, you can start registration over. 
+</p>
+	
+<%= render :partial => 'user_activations/resend_submits' %>

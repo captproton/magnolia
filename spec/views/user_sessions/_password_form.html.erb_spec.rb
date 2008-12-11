@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-VIEW_PATH = "/user_sessions/_password_form.html.erb"
+view_path = "/user_sessions/_password_form.html.erb"
 
-describe VIEW_PATH do
+describe view_path do
   include UserSessionsHelper
   
   before(:each) do
@@ -11,7 +11,7 @@ describe VIEW_PATH do
   end
   
   it "should render form" do
-    render VIEW_PATH
+    render view_path
     
     response.should have_tag("form[action=?][method=post]", user_session_path) do
       with_tag("input#user_session_email[name=?]", "user_session[email]")

@@ -1,2 +1,0 @@
-class UserActiviationsController < ApplicationController
-end

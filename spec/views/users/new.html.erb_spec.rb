@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/users/new.html.erb" do
+view_path = '/users/new.html.erb'
+
+describe view_path do
   include UsersHelper
   
   before(:each) do
@@ -18,7 +20,7 @@ describe "/users/new.html.erb" do
     template.should_receive(:render).with( :partial => "/users/screen_name_field" )
     template.should_receive(:render).with( :partial => "/users/terms_of_use" )
     
-    render "/users/new.html.erb"
+    render view_path
     
     response.should have_tag("form[action=?][method=post]", users_path) do
       with_tag("input#user_password[name=?]", "user[password]")
