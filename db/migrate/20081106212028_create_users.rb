@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string :screen_name, :limit => 50
+      t.string :screen_name, :first_name, :limit => 50
       t.string :email, :crypted_password, :password_salt, :remember_token
       t.integer :login_count
       t.datetime :last_request_at, :last_login_at, :current_login_at, :joined_at

@@ -52,10 +52,22 @@ class User < ActiveRecord::Base
     user.empty? ? nil : user[0]
   end
   
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    UserNotifier.deliver_password_reset_instructions(self)
+  end
   
-  ###############
-  # Validations #
-  ###############
+  # ==================
+  # = Accessor Sugar =
+  # ==================
+  
+  def name
+    self.first_name.nil? ? self.screen_name : self.first_name
+  end
+  
+  # ===============
+  # = Validations =
+  # ===============
   
   def validate_email
     if email.to_s.empty?
