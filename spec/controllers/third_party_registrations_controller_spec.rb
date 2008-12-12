@@ -167,7 +167,7 @@ describe ThirdPartyRegistrationsController do
       describe "and valid parameters" do
         
         before(:each) do
-          mock_user(:save => true, :open_ids => [])
+          mock_user(:save => true, :open_ids => [], :active= => true)
           User.stub!(:new).with({'these' => 'params'}).and_return(mock_user)
           UserSession.stub!(:create).and_return(mock_user_session)
         end
@@ -184,11 +184,16 @@ describe ThirdPartyRegistrationsController do
           assigns(:user).open_ids.should include(open_id)
         end
         
+        it "should set the user to active" do
+          mock_user.should_receive(:active=).with(true)
+          put :update, :user => {:these => 'params'}
+        end
+        
         it "should clear the openid_identifier from the session" do
           put :update, :user => {:these => 'params'}
           @controller.session[:openid_identifier].should be_nil
         end
-        
+
         it "should log the user in" do
           UserSession.should_receive(:create).with(mock_user).and_return(mock_user_session)          
           put :update, :user => {:these => 'params'}
@@ -209,7 +214,7 @@ describe ThirdPartyRegistrationsController do
       describe "and invalid params" do
 
         before(:each) do
-          User.stub!(:new).and_return( mock_user( :save => false, :open_ids => [] ) )
+          User.stub!(:new).and_return( mock_user( :save => false, :open_ids => [], :active= => true  ) )
         end
         
         it "should expose a newly created but unsaved user as @user" do

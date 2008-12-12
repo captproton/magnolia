@@ -67,7 +67,8 @@ class ThirdPartyRegistrationsController < ApplicationController
 
     @user = User.new params[:user]
     @user.open_ids << OpenId.new( :openid_identifier => session[:openid_identifier] )
-
+    @user.active = true
+    
     respond_to do |format|
       if @user.save
         session[:openid_identifier] = nil
