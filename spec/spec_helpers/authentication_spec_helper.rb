@@ -4,6 +4,7 @@ module AuthenticationSpecHelper
     {
       :email => 'value@email.com',
       :screen_name => "screen_name",
+      :first_name => 'first_name',
       :password => 'value for password',
       :password_confirmation => 'value for password',
       :crypted_password => "value for crypted_password",

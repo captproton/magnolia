@@ -1,0 +1,12 @@
+<h1>Reset Password</h1>
+ 
+<p>Enter your email address or Ma.gnolia ScreenName and we will send you a link that allows you to reset your password.</p>
+ 
+<% form_tag password_resets_path do %>
+
+<p>
+  <%= label_tag 'identifier', "Email / Ma.gnolia ScreenName:" %><br />
+  <%= text_field_tag "identifier" %> <%= submit_tag "Go" %>
+</p>
+
+<% end %>

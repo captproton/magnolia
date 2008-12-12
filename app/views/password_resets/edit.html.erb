@@ -1,0 +1,18 @@
+<h1>Change Password</h1>
+ 
+<% form_for @user, :url => password_reset_path(@user.perishable_token), :html => {:method => 'put'} do |f| %>
+  <%= f.error_messages %>
+
+	<p>
+	  <%= f.label :password %><br />
+	  <%= f.password_field :password %>
+	</p>
+
+	<p>
+	  <%= f.label :password_confirmation %><br />
+	  <%= f.password_field :password_confirmation %>
+	</p>
+
+  <%= f.submit "Update password and log in" %>
+
+<% end %>

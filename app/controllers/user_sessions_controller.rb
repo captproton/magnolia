@@ -45,7 +45,11 @@ class UserSessionsController < ApplicationController
       open_id_authentication :using_ajax => true
       
     else # the field entered is an email 
-      user = User.find_by_email( params[:openid_identifier] ) ? authenticate_existing_user( user ) : authenticate_new_user
+      if user = User.find_by_email( params[:openid_identifier] )
+        authenticate_existing_user( user ) 
+      else
+        authenticate_new_user
+      end
 
     end
   end
@@ -57,9 +61,9 @@ class UserSessionsController < ApplicationController
     def authenticate_existing_user( user )
       
       if open_id = OpenId.find_by_user_id( user.id )
-        params[:openid_identifier] = open_id.openid_url
+        params[:openid_identifier] = open_id.openid_identifier
         open_id_authentication :using_ajax => true
-      else          
+      else
         non_open_id_create
       end
     end

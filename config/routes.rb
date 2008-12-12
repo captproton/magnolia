@@ -6,9 +6,9 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :users
   map.resource :user_session
-  map.resource :password
   map.resource :third_party_registration
   map.resources :user_activations
+  map.resources :password_resets
   
 	# ==================
 	# = Administration =
