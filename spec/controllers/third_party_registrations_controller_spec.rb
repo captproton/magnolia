@@ -167,13 +167,14 @@ describe ThirdPartyRegistrationsController do
       describe "and valid parameters" do
         
         before(:each) do
-          @user = mock_user(:save => true, :open_ids => [])
-          User.stub!(:new).with({'these' => 'params'}).and_return(@user)
+          mock_user(:save => true, :open_ids => [])
+          User.stub!(:new).with({'these' => 'params'}).and_return(mock_user)
+          UserSession.stub!(:create).and_return(mock_user_session)
         end
         
         it "should expose a newly created user" do
           put :update, :user => {:these => 'params'}
-          assigns(:user).should equal(@user)
+          assigns(:user).should equal(mock_user)
         end
         
         it "should create an OpenId for the new user" do
@@ -188,9 +189,14 @@ describe ThirdPartyRegistrationsController do
           @controller.session[:openid_identifier].should be_nil
         end
         
+        it "should log the user in" do
+          UserSession.should_receive(:create).with(mock_user).and_return(mock_user_session)          
+          put :update, :user => {:these => 'params'}
+        end
+        
         it "should redirect to the user home page if Orientation was not selected" do
           put :update, :user => {:these => 'params'}, :commit => 'home'
-          response.should redirect_to( user_url(@user) )
+          response.should redirect_to( user_url(mock_user) )
         end
         
         it "should redirect to the orientation page if Orientation was selected" do

@@ -71,6 +71,7 @@ class ThirdPartyRegistrationsController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:openid_identifier] = nil
+        @user_session = UserSession.create(@user)
         format.html do
           params[:commit] == 'orientation' ? redirect_to( orientation_url ) : redirect_to( user_url(@user) )
         end
