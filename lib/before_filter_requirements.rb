@@ -20,5 +20,10 @@ module ActionRequirements
       end
     end
   
+    def require_active_user
+      unless @current_user && @current_user.active
+        flash[:notice] = 'You must be activated to access this page.'
+      end
+    end
   
 end
