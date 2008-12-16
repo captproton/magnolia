@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 view_path = '/password_resets/edit.html.erb'
-include AuthenticationSpecHelper
 
 describe view_path do
   

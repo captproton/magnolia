@@ -9,6 +9,9 @@ require 'ruby-debug'
 require File.expand_path(File.dirname(__FILE__) + "/spec_helpers/authentication_spec_helper.rb")
 include AuthenticationSpecHelper
 
+require File.expand_path(File.dirname(__FILE__) + "/spec_helpers/before_filter_spec_helper.rb")
+include BeforeFilterSpecHelper
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
