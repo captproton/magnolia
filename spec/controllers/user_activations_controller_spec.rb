@@ -34,7 +34,7 @@ describe UserActivationsController do
     end
   end
 
-  describe "responding to GET edit" do
+  describe "responding to GET show" do
     
     describe "when not logged in" do
       
@@ -44,7 +44,31 @@ describe UserActivationsController do
       
       it "should call update" do
         @controller.should_receive(:update)
+        get :show, :id => 'p_token'
+      end
+      
+    end
+    
+    describe "when not logged in" do
+      it "should redirect to login page" do  
+        get :show, :id => 'p_token'
+        response.should redirect_to( login_path )
+        flash[:notice].should ==('You must be logged in to access this page.')
+      end
+    end
+  end
+  
+  describe "responding to GET edit" do
+    
+    describe "when not logged in" do
+      
+      before(:each) do        
+        login_as( mock_user )
+      end
+      
+      it "should call render the new view" do
         get :edit, :id => 'p_token'
+        response.should render_template('new')
       end
       
     end

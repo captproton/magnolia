@@ -2,12 +2,36 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
 
+  describe "with actions that require a user to be logged in" do
+    
+    it "should handle missing user" do
+      test_before_filter( :require_user )
+    end
+    
+  end
+  
+  describe "with actions that require a user NOT to be logged in" do
+    
+    it "should handle a user being present" do
+      login_as(mock_user)
+      test_before_filter( :require_no_user )
+    end
+    
+  end
+  
+  describe "with actions which require an actiuve user" do
+    it "should handle inactive user" do      
+      login_as(mock_user(:active? => false))
+      test_before_filter( :require_active_user )
+    end
+  end
+  
   describe "responding to GET show" do
 
     describe "when logged in" do
 
       before(:each) do
-        login_as(mock_user)
+        login_as(mock_user(:active? => true))
       end
       
       it "should expose the requested user as @user" do
@@ -28,13 +52,6 @@ describe UsersController do
       end
     end
     
-    describe "when not logged in" do
-      it "should redirect to login page" do       
-        get :show, :id => '37'
-        response.should redirect_to( login_url )
-        flash[:notice].should ==('You must be logged in to access this page.')
-      end
-    end
   end
 
   describe "responding to GET new" do
@@ -57,15 +74,6 @@ describe UsersController do
         User.should_receive(:new).and_return(mock_user)
         get :new, :registration_method => 'magnolia'
         response.should render_template('new')
-      end
-    end
-    
-    describe "when logged in" do
-      it "should redirect to user home page" do        
-        login_as(mock_user)
-        get :new
-        response.should redirect_to( user_path(mock_user) )
-        flash[:notice].should ==('You must be logged out to access this page.')
       end
     end
   end
@@ -118,15 +126,6 @@ describe UsersController do
           response.should render_template('new')
         end
       
-      end
-    end
-    
-    describe "when logged in" do
-      it "should redirect to user home page" do        
-        login_as(mock_user)
-        post :create
-        response.should redirect_to( user_path(mock_user) )
-        flash[:notice].should ==('You must be logged out to access this page.')
       end
     end
     

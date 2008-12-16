@@ -184,11 +184,6 @@ describe ThirdPartyRegistrationsController do
           assigns(:user).open_ids.should include(open_id)
         end
         
-        it "should set the user to active" do
-          mock_user.should_receive(:active=).with(true)
-          put :update, :user => {:these => 'params'}
-        end
-        
         it "should clear the openid_identifier from the session" do
           put :update, :user => {:these => 'params'}
           @controller.session[:openid_identifier].should be_nil

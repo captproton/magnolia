@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   layout 'full_width'
   
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user, :only => [:show]
+  before_filter :require_active_user, :only => [:show]
   
   # GET /users/new
   # GET /users/new.xml

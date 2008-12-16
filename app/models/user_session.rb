@@ -4,5 +4,6 @@ class UserSession < Authlogic::Session::Base
   cookie_key 'magnolia_credentials'
   session_key 'magnolia_session'
   login_field :email
+  check_user_state = false
   
 end

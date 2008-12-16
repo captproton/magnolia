@@ -13,7 +13,7 @@ describe view_path do
 
   it "should render the activation url" do
     render view_path
-    response.should have_text( Regexp.new( edit_user_activation_url( @user.perishable_token ) ) )
+    response.should have_text( Regexp.new( user_activation_url( @user.perishable_token ) ) )
   end
   
 end

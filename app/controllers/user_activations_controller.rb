@@ -9,8 +9,15 @@ class UserActivationsController < ApplicationController
     UserNotifier.deliver_signup_notice(@current_user)
   end
 
-  # Overloaded the edit action to call update because we can only use GET links in emails
+  # The edit form for UserActivations contains buttons to allow the user to resend the
+  # activation notice email or start the registration process over.
   def edit
+    flash[:notice] = 'You still need to activate your account.'
+    render :action => :new
+  end
+  
+  # Overloaded the show action to call update because we can only use GET links in emails
+  def show
     update
   end
   
