@@ -1,6 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+require File.expand_path(File.dirname(__FILE__) + '/shared/before_filter_behaviors_spec' )
+include BeforeFilterBehaviors
+
 describe UserActivationsController do
+
+  it_should_behave_like "a controller with before_filters"
 
   describe "responding to GET new" do
     
@@ -24,14 +29,7 @@ describe UserActivationsController do
       end
       
     end
-    
-    describe "when not logged in" do
-      it "should redirect to login page" do  
-        get :new
-        response.should redirect_to( login_path )
-        flash[:notice].should ==('You must be logged in to access this page.')
-      end
-    end
+
   end
 
   describe "responding to GET show" do
@@ -49,13 +47,6 @@ describe UserActivationsController do
       
     end
     
-    describe "when not logged in" do
-      it "should redirect to login page" do  
-        get :show, :id => 'p_token'
-        response.should redirect_to( login_path )
-        flash[:notice].should ==('You must be logged in to access this page.')
-      end
-    end
   end
   
   describe "responding to GET edit" do
@@ -72,14 +63,7 @@ describe UserActivationsController do
       end
       
     end
-    
-    describe "when not logged in" do
-      it "should redirect to login page" do  
-        get :edit, :id => 'p_token'
-        response.should redirect_to( login_path )
-        flash[:notice].should ==('You must be logged in to access this page.')
-      end
-    end
+
   end
   
   describe "responding to PUT update" do
@@ -126,14 +110,6 @@ describe UserActivationsController do
           mock_user.should_not_receive(:reset_perishable_token!)
         end
         
-      end
-    end
-    
-    describe "when not logged in" do
-      it "should redirect to login page" do  
-        put :update, :id => 'p_token'
-        response.should redirect_to( login_path )
-        flash[:notice].should ==('You must be logged in to access this page.')
       end
     end
   end

@@ -1,18 +1,20 @@
 module BeforeFilterSpecHelper
   
   # Returns the actions for the given controller to which the given filter has been applied
-  def get_actions_to_test(controller, filter_method)
+  def get_actions_to_test(filter_method)
     
     current_filter = controller.class.filter_chain.detect do |f| 
       f.kind_of?( ActionController::Filters::BeforeFilter ) && f.method == filter_method 
     end
+      
+    return [] unless current_filter
     
     if current_filter.options[:only]
       current_filter.options[:only]
     elsif current_filter.options[:except]
       current_filter.options[:except]
     else
-      controller.public_instance_methods(false).reject{ |action| ['rescue_action'].include?(action) }
+      controller.class.public_instance_methods(false).reject{ |action| ['rescue_action'].include?(action) }
     end
   end
     
@@ -46,12 +48,14 @@ module BeforeFilterSpecHelper
     
   def test_before_filter( filter_method )
     
-    actions_to_test = get_actions_to_test( controller, filter_method )
-      
+    actions_to_test = get_actions_to_test(filter_method)
+    
+    return if actions_to_test.empty?
+    
     # setting pre send expectations within the iteration over actions caused multiple
     # expectations to be created and all but the first would fail
-    self.send( "#{filter_method.to_s}_pre_send_requirements" ) unless actions_to_test.empty?
-      
+    self.send( "#{filter_method.to_s}_pre_send_requirements" )
+    
     actions_to_test.each do |action|
       route = nil
       controller_short_name = controller.class.to_s.gsub('Controller', '').tableize

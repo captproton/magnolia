@@ -1,6 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+require File.expand_path(File.dirname(__FILE__) + '/shared/before_filter_behaviors_spec' )
+include BeforeFilterBehaviors
+
 describe UserSessionsController do
+  
+  it_should_behave_like "a controller with before_filters"
 
   describe "responding to GET new" do
     
@@ -21,15 +26,6 @@ describe UserSessionsController do
         assigns[:section].should ==('authentication')
       end
       
-    end
-    
-    describe "when logged in" do
-      it "should redirect to user home page" do        
-        login_as(mock_user)
-        get :new
-        response.should redirect_to( user_path(mock_user) )
-        flash[:notice].should ==('You must be logged out to access this page.')
-      end
     end
   end
 
@@ -73,17 +69,7 @@ describe UserSessionsController do
         end
         
       end
-    end
-    
-    describe "when logged in" do
-      it "should redirect to user home page" do        
-        login_as(mock_user)
-        post :create
-        response.should redirect_to( user_path(mock_user) )
-        flash[:notice].should ==('You must be logged out to access this page.')
-      end
-    end
-    
+    end    
   end
   
   describe "responding to DELETE" do
@@ -106,15 +92,6 @@ describe UserSessionsController do
           response.should redirect_to( login_url )
         end
     
-    end
-    
-    describe "when logged in" do
-      it "should redirect to login page" do       
-        delete :destroy
-        response.should redirect_to( login_url )
-        flash[:notice].should ==('You must be logged in to access this page.')
-      end
-    end
-    
+    end    
   end
 end
