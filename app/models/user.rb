@@ -27,8 +27,8 @@
 class User < ActiveRecord::Base
   
   acts_as_authentic :perishable_token_valid_for => 15.minutes, 
-      :validate_fields => false # authlogic's default validations don't play nice with OpenId
-      # :session_ids => []
+      :validate_fields => false, # authlogic's default validations don't play nice with OpenId
+      :session_ids => []
       
   validate :validate_email, :validate_screen_name, :validate_password, :validate_terms_of_use
     

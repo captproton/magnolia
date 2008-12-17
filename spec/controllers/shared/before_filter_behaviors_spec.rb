@@ -17,7 +17,7 @@ module BeforeFilterBehaviors
       end
     end
 
-    describe "with actions which require an actiuve user" do
+    describe "with actions which require an active user" do
       it "should handle inactive user" do      
         login_as(mock_user(:active? => false))
         test_before_filter( :require_active_user )
