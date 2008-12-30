@@ -4,7 +4,8 @@ describe "/users/show.html.erb" do
   include UsersHelper
   
   before(:each) do
-    assigns[:user] = @user = stub_model(User,
+    assigns[:user] = @user = stub_model( 
+      User,
       :email => 'value for email',
       :screen_name => "value for login",
       :crypted_password => "value for crypted_password",

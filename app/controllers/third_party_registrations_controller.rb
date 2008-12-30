@@ -28,7 +28,7 @@ class ThirdPartyRegistrationsController < ApplicationController
   def create
     
     if using_open_id?
-      open_id_authentication
+      open_id_authentication( :required => [ :email ], :optional => [ :nickname ] )
       
     else # the field entered is an email 
       
@@ -46,7 +46,7 @@ class ThirdPartyRegistrationsController < ApplicationController
 
         if eaut_id
           params[:openid_identifier] = eaut_id
-          open_id_authentication
+          open_id_authentication( :required => [ :email ], :optional => [ :nickname ] )
         
         else
           # TODO check what they want to do here? display error page : redirect to un/pw
@@ -63,6 +63,7 @@ class ThirdPartyRegistrationsController < ApplicationController
   end
   
   def update
+
     redirect_to( :action => 'new' ) and return unless session[:openid_identifier] 
 
     @user = User.new params[:user]
@@ -71,9 +72,10 @@ class ThirdPartyRegistrationsController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:openid_identifier] = nil
-        UserSession.create(@user)
+        @user_session = UserSession.create(@user)
+        @current_user = @user_session && @user_session.record
         format.html do
-          params[:commit] == 'orientation' ? redirect_to( orientation_url ) : redirect_to( user_url(@user) )
+          render :template => 'user_activations/new'
         end
       else
         format.html { render :action => :edit }

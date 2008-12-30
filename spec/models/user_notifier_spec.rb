@@ -10,7 +10,7 @@ describe UserNotifier do
     
     it "should contain the activation code" do
       mail = UserNotifier.deliver_signup_notice(@user)
-      mail.body.should match Regexp.new( @user.perishable_token )
+      mail.body.should match( Regexp.new( @user.perishable_token ) )
     end
     
     it "should be to the user" do      

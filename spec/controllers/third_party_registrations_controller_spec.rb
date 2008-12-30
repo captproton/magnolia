@@ -157,7 +157,7 @@ describe ThirdPartyRegistrationsController do
         before(:each) do
           mock_user(:save => true, :open_ids => [], :active= => true)
           User.stub!(:new).with({'these' => 'params'}).and_return(mock_user)
-          UserSession.stub!(:create).and_return(mock_user_session)
+          UserSession.stub!(:create).and_return( mock_user_session( :record => mock_user ) )
         end
         
         it "should expose a newly created user" do
@@ -182,14 +182,9 @@ describe ThirdPartyRegistrationsController do
           put :update, :user => {:these => 'params'}
         end
         
-        it "should redirect to the user home page if Orientation was not selected" do
+        it "should render the user_activation page" do
           put :update, :user => {:these => 'params'}, :commit => 'home'
-          response.should redirect_to( user_url(mock_user) )
-        end
-        
-        it "should redirect to the orientation page if Orientation was selected" do
-          put :update, :user => {:these => 'params'}, :commit => 'orientation'
-          response.should redirect_to( orientation_url )
+          response.should render_template( 'user_activations/new' )
         end
         
       end
@@ -212,6 +207,6 @@ describe ThirdPartyRegistrationsController do
       end
       
     end
-  end # POST update
+  end # PUT update
 
 end

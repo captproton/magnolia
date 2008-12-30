@@ -15,7 +15,7 @@ describe view_path do
 
   it "should render form 'Resend Email'" do
     render view_path
-    response.should have_tag("form[action=?][method=post]", new_user_activation_path ) do
+    response.should have_tag("form[action=?][method=get]", new_user_activation_path ) do
       with_tag("input[type=submit][value=?]", 'Resend Email')
     end
   end

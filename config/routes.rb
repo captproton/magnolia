@@ -23,7 +23,6 @@ ActionController::Routing::Routes.draw do |map|
   map.privacy 'privacy', :controller => 'pages', :action => 'show', :page => 'privacy'
   map.orientation 'orientation', :controller => 'pages', :action => 'show', :page => 'orientation'
 	map.root :controller => 'pages', :action => 'show', :page => 'home'
-	
-	map.connect '*page' , :controller => 'pages' , :action => 'show'
+
 
 end

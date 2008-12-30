@@ -15,13 +15,9 @@ module OpenIdUtils
     # 
     # A base implementation is provided for #failed_openid_authentication but #successful_openid_login
     # will throw an error if it is not implemented in the including controller.
-    def open_id_authentication( options = {})
+    def open_id_authentication( options = {} )
     
-      authenticate_with_open_id( params[:openid_identifier], 
-          options.update( :required => [ :email ], 
-          :optional => [ :nickname ] )
-        ) do |result, identity_url, registration|
-            
+      authenticate_with_open_id( params[:openid_identifier], options ) do |result, identity_url, registration|
         if result.successful?
           successful_openid_authentication identity_url, registration 
         else
