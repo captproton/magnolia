@@ -113,5 +113,36 @@ describe UserActivationsController do
       end
     end
   end
+
   
+  describe "responding to DELETE destroy" do
+    
+    describe "when logged in" do
+      
+      before(:each) do        
+        login_as( mock_user( :perishable_token => 'p_token' ) )
+        mock_user.stub!(:update_attribute)
+        mock_user.stub!(:reset_perishable_token!)
+        mock_user.stub!(:destroy)
+        mock_user_session.stub!(:destroy)
+      end
+      
+      it "should destroy the user_session" do
+        mock_user_session.should_receive(:destroy)
+        delete :destroy, :id => '1'
+      end
+      
+      it "should destroy the user" do
+        mock_user.should_receive(:destroy)
+        delete :destroy, :id => '1'
+      end
+      
+      it "should redirect to the signup page" do
+        delete :destroy, :id => '1'
+        response.should redirect_to( new_user_path )
+      end
+        
+    end
+  end
+    
 end

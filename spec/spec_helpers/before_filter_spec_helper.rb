@@ -42,7 +42,7 @@ module BeforeFilterSpecHelper
       
       method = route.conditions[:method]
       
-      if ['show', 'edit', 'update', 'delete'].include?( action )      
+      if ['show', 'edit', 'update', 'destroy'].include?( action )      
         self.send(method, action, :id => 1)
       else
         self.send(method, action)

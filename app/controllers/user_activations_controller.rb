@@ -31,4 +31,11 @@ class UserActivationsController < ApplicationController
     end
   end
 
+  # The 'Start Over' buttons link here
+  def destroy
+    @user_session.destroy
+    @current_user.destroy
+    redirect_to new_user_path
+  end
+  
 end

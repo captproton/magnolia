@@ -1,2 +1,2 @@
 <%= form_tag new_user_activation_path, :method => 'get' -%><%= submit_tag 'Resend Email', :name => nil, :style => 'float: left;' %></form> 
-<%= form_tag signup_path, :method => 'get' -%>&nbsp;<%= submit_tag 'Start Over', :name => nil %></form>
+<%= form_tag user_activation_path(@current_user), :method => 'delete' -%>&nbsp;<%= submit_tag 'Start Over', :confirm => 'Are you sure you want to reregister? Your current account will be deleted.', :name => nil %></form>

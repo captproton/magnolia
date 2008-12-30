@@ -22,8 +22,9 @@ describe view_path do
   
   it "should render form 'Start Over'" do
     render view_path
-    response.should have_tag("form[action=?][method=get]", signup_path ) do
+    response.should have_tag("form[action=?][method=post]", user_activation_path(@current_user) ) do
       with_tag("input[type=submit][value=?]", 'Start Over')
+      with_tag("input[type=hidden][value=?][name=_method]", 'delete')
     end
   end
   
