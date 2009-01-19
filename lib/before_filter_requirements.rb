@@ -1,7 +1,7 @@
 module BeforeFilterRequirements
   
-  LOGGED_IN_ERROR_MESSAGE = 'You must be logged in to access this page.'
-  LOGGED_OUT_ERROR_MESSAGE = 'You must be logged out to access this page.'
+  LOGGED_IN_ERROR_MESSAGE = 'You must be logged in to access the page you requested.'
+  LOGGED_OUT_ERROR_MESSAGE = 'You must be logged out to access the page you requested.'
   
   private
   

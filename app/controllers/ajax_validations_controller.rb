@@ -1,5 +1,7 @@
 class AjaxValidationsController < ApplicationController
   
+  skip_before_filter :load_user
+  
   def validate_email
     respond_to do |wants|
       wants.html {  }

@@ -1,6 +1,6 @@
 <h1>Join Ma.gnolia</h1>
 
-<% form_tag( third_party_registration_path ) do %>
+<% form_tag( open_id_registration_path ) do %>
 
 <div id='third_party_instructions' style='float: right; width: 450px; border: 1px dashed grey; padding: 1em;'>
 	<p>
@@ -17,7 +17,9 @@
 			:style => 'margin-left: 3em;', :id => 'instruction_link' %>
 </p>
 
-<p>or use your <%= link_to 'Facebook account', root_url %> </p>
+<%= fb_connect_javascript_tag %>
+<%= init_fb_connect ["XFBML"] %>
+<p>or sign up with Facebook: <span style='position: relative; top: 7.5px;'><%= fb_login_button 'doFacebookLogin()' %></span></p>
 <% javascript_tag do -%>
 	$('instruction_link').show();
 	$('third_party_instructions').hide();

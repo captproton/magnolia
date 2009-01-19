@@ -18,7 +18,15 @@ class UserSessionsController < ApplicationController
   # Logs the user out.
   # Mapped to route /logout
   def destroy
-    @user_session.destroy
+    @user_session.destroy if @user_session
+    
+    # handle facebook cookies
+    cookies.keys.each do |key|
+      if key =~ Regexp.new( Facebooker.api_key )
+        cookies.delete key
+      end
+    end
+    
     flash[:notice] = 'Logout successful!'
     redirect_to login_url
   end
@@ -40,7 +48,7 @@ class UserSessionsController < ApplicationController
   # else
   #   try openid with whatever the user provided
   def create
-    
+      
     if using_open_id?
       open_id_authentication :using_ajax => true
       

@@ -11,7 +11,7 @@ module Authlogic
         # without establishing a DB connection. In your framework environment this is done for you, but if you are using Authlogic outside of your frameword, you need to assign a controller
         # object to Authlogic via Authlogic::Session::Base.controller = obj.
         def activated?
-          !controller.blank?
+          !controller.nil?
         end
         
         def controller=(value) # :nodoc:

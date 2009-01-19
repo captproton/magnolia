@@ -26,6 +26,9 @@
 			
 		  <p><%= f.check_box :remember_me, :style => 'vertical-align: middle;' %><%= f.label :remember_me, 'Keep me signed in' %></p>
 
+			<%= fb_connect_javascript_tag %>
+			<%= init_fb_connect ["XFBML"] %>
+			<p>You can also sign in with Facebook: <span style='position: relative; top: 7.5px;'><%= fb_login_button 'doFacebookLogin()' %></span></p>
 		<% end %>
 
 		<p>Not a member? You can <%= link_to 'Join Free', signup_url %>.</p>

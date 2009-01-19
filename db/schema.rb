@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081119192750) do
+ActiveRecord::Schema.define(:version => 20090107200544) do
+
+  create_table "facebook_identities", :force => true do |t|
+    t.integer  "facebook_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "facebook_identities", ["facebook_id"], :name => "index_facebook_identities_on_facebook_id"
+  add_index "facebook_identities", ["user_id"], :name => "index_facebook_identities_on_user_id"
 
   create_table "open_id_authentication_associations", :force => true do |t|
     t.integer "issued"

@@ -1,10 +1,11 @@
 # == Schema Information
-# Schema version: 20081119192750
+# Schema version: 20090107200544
 #
 # Table name: users
 #
 #  id                    :integer(4)      not null, primary key
 #  screen_name           :string(50)
+#  first_name            :string(50)
 #  email                 :string(255)
 #  crypted_password      :string(255)
 #  password_salt         :string(255)
@@ -37,6 +38,7 @@ class User < ActiveRecord::Base
   attr_accessor :password_confirmation
   
   has_many :open_ids, :dependent => :destroy
+  has_one :facebook_identity, :dependent => :destroy
   
   def to_param
   	screen_name
@@ -110,9 +112,9 @@ class User < ActiveRecord::Base
   
   def validate_password
     # TODO: Check if we should do any pw length or contents validation...
-    if password.to_s.empty? and open_ids.empty? # and self.facebook_identity.nil?
+    if password.to_s.empty? && open_ids.empty? && self.facebook_identity.nil?
       errors.add_to_base( "You didn't choose a password. Please enter a password and try again.")      
-    elsif open_ids.empty? and (password.to_s != password_confirmation.to_s && !password_confirmation.nil?)
+    elsif open_ids.empty? && self.facebook_identity.nil? && (password.to_s != password_confirmation.to_s && !password_confirmation.nil?)
       errors.add_to_base( "Your password and confirmation did not match. Please re-enter them and try again.")      
     end    
   end

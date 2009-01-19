@@ -2,7 +2,7 @@ module BeforeFilterSpecHelper
   
   # Returns an Array containing the actions for the current controller to which the given filter has been applied
   def get_actions_to_test(filter_method)
-    
+
     current_filter = controller.class.filter_chain.detect do |f| 
       f.kind_of?( ActionController::Filters::BeforeFilter ) && f.method == filter_method 
     end

@@ -711,6 +711,9 @@ Object.extend(Object.extend(Magnolia.Bookmark.prototype, Blueprint.Basic), {
   }
 });
 
+// ===========================
+// = Registration Validation =
+// ===========================
 
 function checkScreenName(name, element, token){
   $(element).update("<img src=\"/images/chrome/spinner_on_b.gif\" class=\"status_icon\" /> Checking...");
@@ -730,4 +733,14 @@ function checkPasswords(element) {
   else if(password.value == password_confirmation.value) 
     element.update("<img src=\"/images/icons/green_accept.gif\" class=\"status_icon\"/> Password verified.");
   else element.update("<img src=\"/images/icons/yellow_reject.gif\" class=\"status_icon\"/> Passwords do not match.");
+}
+
+// ==============================
+// = Facebook Connect Callbacks =
+// ==============================
+
+// called from the login page. just redirects to root. the presence of the facebook connect cookies will 
+// then be detected by the set_facebook_session and load_user before_filters
+function doFacebookLogin() {
+  window.location="/";
 }
