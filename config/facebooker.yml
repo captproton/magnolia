@@ -8,34 +8,34 @@
 
 development:
   api_key: a2821daffa29277398ee7076f96cc36b
-  secret_key: 417b16666a85919d69c924c0c8fe2761
+  secret_key: 
   canvas_page_name: mag2dev
   callback_url: http://dev.gnolia.com:8888
   pretty_errors: true
   tunnel:
-    public_host_username: jclark
+    public_host_username: 
     public_host: dev.gnolia.com
     public_port: 8888
     local_port: 3000
 
 test:
   api_key: a2821daffa29277398ee7076f96cc36b
-  secret_key: 417b16666a85919d69c924c0c8fe2761
+  secret_key: 
   canvas_page_name: mag2dev
   callback_url: http://dev.gnolia.com:8888
   tunnel:
-    public_host_username: jclark
+    public_host_username: 
     public_host: dev.gnolia.com
     public_port: 8888
     local_port: 3000
 
 production:
   api_key: a2821daffa29277398ee7076f96cc36b
-  secret_key: 417b16666a85919d69c924c0c8fe2761
+  secret_key: 
   canvas_page_name: mag2dev
   callback_url: http://dev.gnolia.com:8888
   tunnel:
-    public_host_username: jclark
+    public_host_username: 
     public_host: dev.gnolia.com
     public_port: 8888
     local_port: 3000
