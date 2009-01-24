@@ -6,7 +6,13 @@ include BeforeFilterBehaviors
 describe ThirdPartyRegistrationsController do
 
   it_should_behave_like "a controller with before_filters"
-
+  
+  it "should not call load_facebook_user if no UserSession was found" do
+    UserSession.should_receive(:find).and_return(nil)
+    controller.should_not_receive( :load_facebook_user )
+    get :new
+  end
+  
   describe "responding to GET new" do
     
     describe "when not logged in" do

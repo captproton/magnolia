@@ -59,7 +59,7 @@ class OpenIdRegistrationsController < ApplicationController
         render :action => 'new'
       else
         session[:openid_identifier] = openid_identifier
-        redirect_to edit_third_party_registration_url :user => { :screen_name => registration['nickname'], :email => registration['email'] }
+        redirect_to edit_third_party_registration_url( :user => { :screen_name => registration['nickname'], :email => registration['email'] } )
       end
     end
 

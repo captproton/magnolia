@@ -4,8 +4,6 @@ class ThirdPartyRegistrationsController < ApplicationController
   
   before_filter :require_no_user
   
-  # skip_filter :load_user, :only => [:edit, :update]
-  
   # GET /third_party_registration/new
   # Displays the third party registration form. That view will then post to the correct controller for the 
   # specific kind of registration method selected.

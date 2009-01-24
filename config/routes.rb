@@ -11,9 +11,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_activations
   map.resources :password_resets
   
-  # facebook application
-  map.resources :seeds, :conditions => { :canvas => true } 
-  
 	# ==================
 	# = Administration =
 	# ==================

@@ -20,7 +20,7 @@ development:
 
 test:
   api_key: a2821daffa29277398ee7076f96cc36b
-  secret_key: 
+  secret_key:  
   canvas_page_name: mag2dev
   callback_url: http://dev.gnolia.com:8888
   tunnel:

@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
       @user_session = UserSession.find
       @current_user = @user_session && @user_session.record
       
-      if @current_user.nil? && (params[:controller] != 'third_party_registrations_controller')
+      if @current_user.nil? && ( params[:controller] != 'third_party_registrations' )
         load_facebook_user
       end
     end
