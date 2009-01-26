@@ -9,12 +9,7 @@ describe ApplicationController do
   controller_name :fake
   
   before(:each) do
-    # Does this really have to be before_each?
-    # ActionController::Routing::Routes.draw do |map|
-    #   map.resources :fake
-    # end
     ActionController::Routing::Routes.add_named_route( 'fakies', '/fakies', :controller => 'fake', :action => 'index' )
-    
   end
   
   it "should call load_facebook_user if no UserSession was found" do
